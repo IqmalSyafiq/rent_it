@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "222500882225",
+    "project_id": "zuhairy-rent-it-project",
+    "storage_bucket": "zuhairy-rent-it-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:222500882225:android:c1a6db559ab18044431210",
+        "android_client_info": {
+          "package_name": "com.example.rent_it"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyZwX8hD1naFl6L-S-BSOmxBbJpeoI6b8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
