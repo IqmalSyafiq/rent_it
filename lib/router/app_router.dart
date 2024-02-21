@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rent_it/navigations/parent.dart';
 import 'package:rent_it/router/routes_info.dart';
 import 'package:rent_it/views/home_view.dart';
 
@@ -50,7 +51,7 @@ class MyRouter {
         GoRoute(
           name: RouteNames.auth,
           path: RoutePaths.auth,
-          builder: (context, state) => const HomeView(),
+          builder: (context, state) => const Parent(child: HomeView()),
         ),
         GoRoute(
           name: RoutePaths.home,

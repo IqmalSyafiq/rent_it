@@ -11,12 +11,11 @@ class HomeView extends ConsumerStatefulWidget {
 class _HomeViewState extends ConsumerState<HomeView> {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-        child: Container(
+    return Container(
       color: Colors.deepPurple,
       child: const Center(
         child: Text('Home View', style: TextStyle(fontSize: 24, color: Colors.white)),
       ),
-    ));
+    );
   }
 }
