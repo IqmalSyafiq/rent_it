@@ -42,3 +42,12 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# environment files
+assets/environments/.env.web
+assets/environments/.env.android
+assets/environments/.env.ios
+assets/environments/.env.macos
+
+# firebase files
+/lib/firebase_options.dart
