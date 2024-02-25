@@ -24,18 +24,28 @@ mixin _$House {
   String get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'owner_id')
   String get ownerId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'address')
-  String get address => throw _privateConstructorUsedError;
+  @JsonKey(name: 'address_line_one')
+  String get addressLineOne => throw _privateConstructorUsedError;
+  @JsonKey(name: 'address_line_two')
+  String? get addressLineTwo => throw _privateConstructorUsedError;
+  @JsonKey(name: 'postcode')
+  String get postCode => throw _privateConstructorUsedError;
+  @JsonKey(name: 'city')
+  String get city => throw _privateConstructorUsedError;
+  @JsonKey(name: 'state')
+  String get state => throw _privateConstructorUsedError;
   @JsonKey(name: 'num_rooms')
-  num get numRooms => throw _privateConstructorUsedError;
+  int get numRooms => throw _privateConstructorUsedError;
   @JsonKey(name: 'num_bathrooms')
-  num get bathrooms => throw _privateConstructorUsedError;
+  int get bathrooms => throw _privateConstructorUsedError;
   @JsonKey(name: 'monthly_rent')
   double get monthlyRent => throw _privateConstructorUsedError;
   @JsonKey(name: 'description')
   String? get description => throw _privateConstructorUsedError;
   @JsonKey(name: 'image_url')
   List<String>? get imageUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: 'tenants_id')
+  List<String>? get tenantsId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -50,12 +60,17 @@ abstract class $HouseCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'id') String id,
       @JsonKey(name: 'owner_id') String ownerId,
-      @JsonKey(name: 'address') String address,
-      @JsonKey(name: 'num_rooms') num numRooms,
-      @JsonKey(name: 'num_bathrooms') num bathrooms,
+      @JsonKey(name: 'address_line_one') String addressLineOne,
+      @JsonKey(name: 'address_line_two') String? addressLineTwo,
+      @JsonKey(name: 'postcode') String postCode,
+      @JsonKey(name: 'city') String city,
+      @JsonKey(name: 'state') String state,
+      @JsonKey(name: 'num_rooms') int numRooms,
+      @JsonKey(name: 'num_bathrooms') int bathrooms,
       @JsonKey(name: 'monthly_rent') double monthlyRent,
       @JsonKey(name: 'description') String? description,
-      @JsonKey(name: 'image_url') List<String>? imageUrl});
+      @JsonKey(name: 'image_url') List<String>? imageUrl,
+      @JsonKey(name: 'tenants_id') List<String>? tenantsId});
 }
 
 /// @nodoc
@@ -73,12 +88,17 @@ class _$HouseCopyWithImpl<$Res, $Val extends House>
   $Res call({
     Object? id = null,
     Object? ownerId = null,
-    Object? address = null,
+    Object? addressLineOne = null,
+    Object? addressLineTwo = freezed,
+    Object? postCode = null,
+    Object? city = null,
+    Object? state = null,
     Object? numRooms = null,
     Object? bathrooms = null,
     Object? monthlyRent = null,
     Object? description = freezed,
     Object? imageUrl = freezed,
+    Object? tenantsId = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -89,18 +109,34 @@ class _$HouseCopyWithImpl<$Res, $Val extends House>
           ? _value.ownerId
           : ownerId // ignore: cast_nullable_to_non_nullable
               as String,
-      address: null == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
+      addressLineOne: null == addressLineOne
+          ? _value.addressLineOne
+          : addressLineOne // ignore: cast_nullable_to_non_nullable
+              as String,
+      addressLineTwo: freezed == addressLineTwo
+          ? _value.addressLineTwo
+          : addressLineTwo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      postCode: null == postCode
+          ? _value.postCode
+          : postCode // ignore: cast_nullable_to_non_nullable
+              as String,
+      city: null == city
+          ? _value.city
+          : city // ignore: cast_nullable_to_non_nullable
+              as String,
+      state: null == state
+          ? _value.state
+          : state // ignore: cast_nullable_to_non_nullable
               as String,
       numRooms: null == numRooms
           ? _value.numRooms
           : numRooms // ignore: cast_nullable_to_non_nullable
-              as num,
+              as int,
       bathrooms: null == bathrooms
           ? _value.bathrooms
           : bathrooms // ignore: cast_nullable_to_non_nullable
-              as num,
+              as int,
       monthlyRent: null == monthlyRent
           ? _value.monthlyRent
           : monthlyRent // ignore: cast_nullable_to_non_nullable
@@ -112,6 +148,10 @@ class _$HouseCopyWithImpl<$Res, $Val extends House>
       imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      tenantsId: freezed == tenantsId
+          ? _value.tenantsId
+          : tenantsId // ignore: cast_nullable_to_non_nullable
               as List<String>?,
     ) as $Val);
   }
@@ -127,12 +167,17 @@ abstract class _$$HouseImplCopyWith<$Res> implements $HouseCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'id') String id,
       @JsonKey(name: 'owner_id') String ownerId,
-      @JsonKey(name: 'address') String address,
-      @JsonKey(name: 'num_rooms') num numRooms,
-      @JsonKey(name: 'num_bathrooms') num bathrooms,
+      @JsonKey(name: 'address_line_one') String addressLineOne,
+      @JsonKey(name: 'address_line_two') String? addressLineTwo,
+      @JsonKey(name: 'postcode') String postCode,
+      @JsonKey(name: 'city') String city,
+      @JsonKey(name: 'state') String state,
+      @JsonKey(name: 'num_rooms') int numRooms,
+      @JsonKey(name: 'num_bathrooms') int bathrooms,
       @JsonKey(name: 'monthly_rent') double monthlyRent,
       @JsonKey(name: 'description') String? description,
-      @JsonKey(name: 'image_url') List<String>? imageUrl});
+      @JsonKey(name: 'image_url') List<String>? imageUrl,
+      @JsonKey(name: 'tenants_id') List<String>? tenantsId});
 }
 
 /// @nodoc
@@ -148,12 +193,17 @@ class __$$HouseImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? ownerId = null,
-    Object? address = null,
+    Object? addressLineOne = null,
+    Object? addressLineTwo = freezed,
+    Object? postCode = null,
+    Object? city = null,
+    Object? state = null,
     Object? numRooms = null,
     Object? bathrooms = null,
     Object? monthlyRent = null,
     Object? description = freezed,
     Object? imageUrl = freezed,
+    Object? tenantsId = freezed,
   }) {
     return _then(_$HouseImpl(
       id: null == id
@@ -164,18 +214,34 @@ class __$$HouseImplCopyWithImpl<$Res>
           ? _value.ownerId
           : ownerId // ignore: cast_nullable_to_non_nullable
               as String,
-      address: null == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
+      addressLineOne: null == addressLineOne
+          ? _value.addressLineOne
+          : addressLineOne // ignore: cast_nullable_to_non_nullable
+              as String,
+      addressLineTwo: freezed == addressLineTwo
+          ? _value.addressLineTwo
+          : addressLineTwo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      postCode: null == postCode
+          ? _value.postCode
+          : postCode // ignore: cast_nullable_to_non_nullable
+              as String,
+      city: null == city
+          ? _value.city
+          : city // ignore: cast_nullable_to_non_nullable
+              as String,
+      state: null == state
+          ? _value.state
+          : state // ignore: cast_nullable_to_non_nullable
               as String,
       numRooms: null == numRooms
           ? _value.numRooms
           : numRooms // ignore: cast_nullable_to_non_nullable
-              as num,
+              as int,
       bathrooms: null == bathrooms
           ? _value.bathrooms
           : bathrooms // ignore: cast_nullable_to_non_nullable
-              as num,
+              as int,
       monthlyRent: null == monthlyRent
           ? _value.monthlyRent
           : monthlyRent // ignore: cast_nullable_to_non_nullable
@@ -188,6 +254,10 @@ class __$$HouseImplCopyWithImpl<$Res>
           ? _value._imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      tenantsId: freezed == tenantsId
+          ? _value._tenantsId
+          : tenantsId // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -198,13 +268,19 @@ class _$HouseImpl implements _House {
   _$HouseImpl(
       {@JsonKey(name: 'id') required this.id,
       @JsonKey(name: 'owner_id') required this.ownerId,
-      @JsonKey(name: 'address') required this.address,
+      @JsonKey(name: 'address_line_one') required this.addressLineOne,
+      @JsonKey(name: 'address_line_two') this.addressLineTwo,
+      @JsonKey(name: 'postcode') required this.postCode,
+      @JsonKey(name: 'city') required this.city,
+      @JsonKey(name: 'state') required this.state,
       @JsonKey(name: 'num_rooms') required this.numRooms,
       @JsonKey(name: 'num_bathrooms') required this.bathrooms,
       @JsonKey(name: 'monthly_rent') required this.monthlyRent,
       @JsonKey(name: 'description') this.description,
-      @JsonKey(name: 'image_url') final List<String>? imageUrl})
-      : _imageUrl = imageUrl;
+      @JsonKey(name: 'image_url') final List<String>? imageUrl,
+      @JsonKey(name: 'tenants_id') final List<String>? tenantsId})
+      : _imageUrl = imageUrl,
+        _tenantsId = tenantsId;
 
   factory _$HouseImpl.fromJson(Map<String, dynamic> json) =>
       _$$HouseImplFromJson(json);
@@ -216,14 +292,26 @@ class _$HouseImpl implements _House {
   @JsonKey(name: 'owner_id')
   final String ownerId;
   @override
-  @JsonKey(name: 'address')
-  final String address;
+  @JsonKey(name: 'address_line_one')
+  final String addressLineOne;
+  @override
+  @JsonKey(name: 'address_line_two')
+  final String? addressLineTwo;
+  @override
+  @JsonKey(name: 'postcode')
+  final String postCode;
+  @override
+  @JsonKey(name: 'city')
+  final String city;
+  @override
+  @JsonKey(name: 'state')
+  final String state;
   @override
   @JsonKey(name: 'num_rooms')
-  final num numRooms;
+  final int numRooms;
   @override
   @JsonKey(name: 'num_bathrooms')
-  final num bathrooms;
+  final int bathrooms;
   @override
   @JsonKey(name: 'monthly_rent')
   final double monthlyRent;
@@ -241,9 +329,20 @@ class _$HouseImpl implements _House {
     return EqualUnmodifiableListView(value);
   }
 
+  final List<String>? _tenantsId;
+  @override
+  @JsonKey(name: 'tenants_id')
+  List<String>? get tenantsId {
+    final value = _tenantsId;
+    if (value == null) return null;
+    if (_tenantsId is EqualUnmodifiableListView) return _tenantsId;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   String toString() {
-    return 'House(id: $id, ownerId: $ownerId, address: $address, numRooms: $numRooms, bathrooms: $bathrooms, monthlyRent: $monthlyRent, description: $description, imageUrl: $imageUrl)';
+    return 'House(id: $id, ownerId: $ownerId, addressLineOne: $addressLineOne, addressLineTwo: $addressLineTwo, postCode: $postCode, city: $city, state: $state, numRooms: $numRooms, bathrooms: $bathrooms, monthlyRent: $monthlyRent, description: $description, imageUrl: $imageUrl, tenantsId: $tenantsId)';
   }
 
   @override
@@ -253,7 +352,14 @@ class _$HouseImpl implements _House {
             other is _$HouseImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.ownerId, ownerId) || other.ownerId == ownerId) &&
-            (identical(other.address, address) || other.address == address) &&
+            (identical(other.addressLineOne, addressLineOne) ||
+                other.addressLineOne == addressLineOne) &&
+            (identical(other.addressLineTwo, addressLineTwo) ||
+                other.addressLineTwo == addressLineTwo) &&
+            (identical(other.postCode, postCode) ||
+                other.postCode == postCode) &&
+            (identical(other.city, city) || other.city == city) &&
+            (identical(other.state, state) || other.state == state) &&
             (identical(other.numRooms, numRooms) ||
                 other.numRooms == numRooms) &&
             (identical(other.bathrooms, bathrooms) ||
@@ -262,7 +368,9 @@ class _$HouseImpl implements _House {
                 other.monthlyRent == monthlyRent) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            const DeepCollectionEquality().equals(other._imageUrl, _imageUrl));
+            const DeepCollectionEquality().equals(other._imageUrl, _imageUrl) &&
+            const DeepCollectionEquality()
+                .equals(other._tenantsId, _tenantsId));
   }
 
   @JsonKey(ignore: true)
@@ -271,12 +379,17 @@ class _$HouseImpl implements _House {
       runtimeType,
       id,
       ownerId,
-      address,
+      addressLineOne,
+      addressLineTwo,
+      postCode,
+      city,
+      state,
       numRooms,
       bathrooms,
       monthlyRent,
       description,
-      const DeepCollectionEquality().hash(_imageUrl));
+      const DeepCollectionEquality().hash(_imageUrl),
+      const DeepCollectionEquality().hash(_tenantsId));
 
   @JsonKey(ignore: true)
   @override
@@ -296,12 +409,18 @@ abstract class _House implements House {
   factory _House(
       {@JsonKey(name: 'id') required final String id,
       @JsonKey(name: 'owner_id') required final String ownerId,
-      @JsonKey(name: 'address') required final String address,
-      @JsonKey(name: 'num_rooms') required final num numRooms,
-      @JsonKey(name: 'num_bathrooms') required final num bathrooms,
+      @JsonKey(name: 'address_line_one') required final String addressLineOne,
+      @JsonKey(name: 'address_line_two') final String? addressLineTwo,
+      @JsonKey(name: 'postcode') required final String postCode,
+      @JsonKey(name: 'city') required final String city,
+      @JsonKey(name: 'state') required final String state,
+      @JsonKey(name: 'num_rooms') required final int numRooms,
+      @JsonKey(name: 'num_bathrooms') required final int bathrooms,
       @JsonKey(name: 'monthly_rent') required final double monthlyRent,
       @JsonKey(name: 'description') final String? description,
-      @JsonKey(name: 'image_url') final List<String>? imageUrl}) = _$HouseImpl;
+      @JsonKey(name: 'image_url') final List<String>? imageUrl,
+      @JsonKey(name: 'tenants_id')
+      final List<String>? tenantsId}) = _$HouseImpl;
 
   factory _House.fromJson(Map<String, dynamic> json) = _$HouseImpl.fromJson;
 
@@ -312,14 +431,26 @@ abstract class _House implements House {
   @JsonKey(name: 'owner_id')
   String get ownerId;
   @override
-  @JsonKey(name: 'address')
-  String get address;
+  @JsonKey(name: 'address_line_one')
+  String get addressLineOne;
+  @override
+  @JsonKey(name: 'address_line_two')
+  String? get addressLineTwo;
+  @override
+  @JsonKey(name: 'postcode')
+  String get postCode;
+  @override
+  @JsonKey(name: 'city')
+  String get city;
+  @override
+  @JsonKey(name: 'state')
+  String get state;
   @override
   @JsonKey(name: 'num_rooms')
-  num get numRooms;
+  int get numRooms;
   @override
   @JsonKey(name: 'num_bathrooms')
-  num get bathrooms;
+  int get bathrooms;
   @override
   @JsonKey(name: 'monthly_rent')
   double get monthlyRent;
@@ -329,6 +460,9 @@ abstract class _House implements House {
   @override
   @JsonKey(name: 'image_url')
   List<String>? get imageUrl;
+  @override
+  @JsonKey(name: 'tenants_id')
+  List<String>? get tenantsId;
   @override
   @JsonKey(ignore: true)
   _$$HouseImplCopyWith<_$HouseImpl> get copyWith =>
