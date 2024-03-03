@@ -22,8 +22,6 @@ AppUser _$AppUserFromJson(Map<String, dynamic> json) {
 mixin _$AppUser {
   @JsonKey(name: 'id')
   String get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'full_name')
-  String get fullName => throw _privateConstructorUsedError;
   @JsonKey(name: 'username')
   String get userName => throw _privateConstructorUsedError;
   @JsonKey(name: 'email')
@@ -43,7 +41,6 @@ abstract class $AppUserCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'id') String id,
-      @JsonKey(name: 'full_name') String fullName,
       @JsonKey(name: 'username') String userName,
       @JsonKey(name: 'email') String email,
       @JsonKey(name: 'role') UserRole? role});
@@ -63,7 +60,6 @@ class _$AppUserCopyWithImpl<$Res, $Val extends AppUser>
   @override
   $Res call({
     Object? id = null,
-    Object? fullName = null,
     Object? userName = null,
     Object? email = null,
     Object? role = freezed,
@@ -72,10 +68,6 @@ class _$AppUserCopyWithImpl<$Res, $Val extends AppUser>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      fullName: null == fullName
-          ? _value.fullName
-          : fullName // ignore: cast_nullable_to_non_nullable
               as String,
       userName: null == userName
           ? _value.userName
@@ -102,7 +94,6 @@ abstract class _$$AppUserImplCopyWith<$Res> implements $AppUserCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'id') String id,
-      @JsonKey(name: 'full_name') String fullName,
       @JsonKey(name: 'username') String userName,
       @JsonKey(name: 'email') String email,
       @JsonKey(name: 'role') UserRole? role});
@@ -120,7 +111,6 @@ class __$$AppUserImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? fullName = null,
     Object? userName = null,
     Object? email = null,
     Object? role = freezed,
@@ -129,10 +119,6 @@ class __$$AppUserImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      fullName: null == fullName
-          ? _value.fullName
-          : fullName // ignore: cast_nullable_to_non_nullable
               as String,
       userName: null == userName
           ? _value.userName
@@ -155,7 +141,6 @@ class __$$AppUserImplCopyWithImpl<$Res>
 class _$AppUserImpl implements _AppUser {
   _$AppUserImpl(
       {@JsonKey(name: 'id') required this.id,
-      @JsonKey(name: 'full_name') required this.fullName,
       @JsonKey(name: 'username') required this.userName,
       @JsonKey(name: 'email') required this.email,
       @JsonKey(name: 'role') this.role = UserRole.tenant});
@@ -166,9 +151,6 @@ class _$AppUserImpl implements _AppUser {
   @override
   @JsonKey(name: 'id')
   final String id;
-  @override
-  @JsonKey(name: 'full_name')
-  final String fullName;
   @override
   @JsonKey(name: 'username')
   final String userName;
@@ -181,7 +163,7 @@ class _$AppUserImpl implements _AppUser {
 
   @override
   String toString() {
-    return 'AppUser(id: $id, fullName: $fullName, userName: $userName, email: $email, role: $role)';
+    return 'AppUser(id: $id, userName: $userName, email: $email, role: $role)';
   }
 
   @override
@@ -190,8 +172,6 @@ class _$AppUserImpl implements _AppUser {
         (other.runtimeType == runtimeType &&
             other is _$AppUserImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.fullName, fullName) ||
-                other.fullName == fullName) &&
             (identical(other.userName, userName) ||
                 other.userName == userName) &&
             (identical(other.email, email) || other.email == email) &&
@@ -200,8 +180,7 @@ class _$AppUserImpl implements _AppUser {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, fullName, userName, email, role);
+  int get hashCode => Object.hash(runtimeType, id, userName, email, role);
 
   @JsonKey(ignore: true)
   @override
@@ -220,7 +199,6 @@ class _$AppUserImpl implements _AppUser {
 abstract class _AppUser implements AppUser {
   factory _AppUser(
       {@JsonKey(name: 'id') required final String id,
-      @JsonKey(name: 'full_name') required final String fullName,
       @JsonKey(name: 'username') required final String userName,
       @JsonKey(name: 'email') required final String email,
       @JsonKey(name: 'role') final UserRole? role}) = _$AppUserImpl;
@@ -230,9 +208,6 @@ abstract class _AppUser implements AppUser {
   @override
   @JsonKey(name: 'id')
   String get id;
-  @override
-  @JsonKey(name: 'full_name')
-  String get fullName;
   @override
   @JsonKey(name: 'username')
   String get userName;

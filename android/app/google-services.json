@@ -12,7 +12,12 @@
           "package_name": "com.example.rent_it"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "222500882225-rkuvdirnkmkpm9fugkk6b9h9deb7q8ni.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDyZwX8hD1naFl6L-S-BSOmxBbJpeoI6b8"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "222500882225-rkuvdirnkmkpm9fugkk6b9h9deb7q8ni.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "222500882225-i951amfrqrt9j7bv9kj9mpkerknng30r.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.rentIt"
+              }
+            }
+          ]
         }
       }
     }

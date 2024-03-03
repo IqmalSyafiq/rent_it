@@ -3,9 +3,22 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:logger/logger.dart';
 import 'package:rent_it/router/routes_info.dart';
+import 'package:rent_it/shared/a_level/parent_scf.dart';
 import 'package:rent_it/views/auth_view.dart';
 import 'package:rent_it/views/home_view.dart';
+import 'package:rent_it/views/manage_view.dart';
+import 'package:rent_it/views/notification_view.dart';
+import 'package:rent_it/views/report_view.dart';
+
+enum AppRouteLocations {
+  auth,
+  home,
+  notification,
+  report,
+  manage
+}
 
 class GoRouterRefreshStream extends ChangeNotifier {
   GoRouterRefreshStream(Stream<dynamic> stream) {
@@ -35,18 +48,19 @@ class MyRouter {
   MyRouter._internal() {
     // Define your GoRouter configuration
     _router = GoRouter(
-      initialLocation: RoutePaths.auth,
       refreshListenable: GoRouterRefreshStream(FirebaseAuth.instance.authStateChanges()),
       redirect: (context, state) {
-        if (FirebaseAuth.instance.currentUser != null) {
-          return RoutePaths.home;
-        }
         if (FirebaseAuth.instance.currentUser == null) {
           return RoutePaths.auth;
+        } else if (FirebaseAuth.instance.currentUser != null && state.uri.toString().contains('auth')) {
+          return RoutePaths.home;
         }
         return null;
       },
-      errorBuilder: (context, state) => const HomeView(),
+      errorBuilder: (context, state) {
+        Logger().w('Error: ${state.error}');
+        return const ParentScaffold(routeLocation: AppRouteLocations.home, child: HomeView());
+      },
       routes: [
         GoRoute(
           name: RouteNames.auth,
@@ -54,16 +68,26 @@ class MyRouter {
           builder: (context, state) => const AuthView(),
         ),
         GoRoute(
-          name: RoutePaths.home,
+          name: RouteNames.home,
           path: RoutePaths.home,
-          builder: (context, state) => const HomeView(),
-          // routes: [
-          //   GoRoute(
-          //     name: RoutePaths.registration,
-          //     path: RoutePaths.registration,
-          //     builder: (context, state) => const RegistrationPage(),
-          //   ),
-          // ],
+          pageBuilder: (context, state) => CustomSlideTransition(child: const ParentScaffold(routeLocation: AppRouteLocations.home, child: HomeView())),
+          routes: [
+            GoRoute(
+              name: RouteNames.notification,
+              path: RoutePaths.notification,
+              pageBuilder: (context, state) => CustomSlideTransition(child: const ParentScaffold(routeLocation: AppRouteLocations.notification, child: NotificationView())),
+            ),
+            GoRoute(
+              name: RouteNames.report,
+              path: RoutePaths.report,
+              pageBuilder: (context, state) => CustomSlideTransition(child: const ParentScaffold(routeLocation: AppRouteLocations.report, child: ReportView())),
+            ),
+            GoRoute(
+              name: RouteNames.manage,
+              path: RoutePaths.manage,
+              pageBuilder: (context, state) => CustomSlideTransition(child: ParentScaffold(key: state.pageKey, routeLocation: AppRouteLocations.manage, child: const ManageView())),
+            ),
+          ],
         ),
       ],
     );
@@ -72,4 +96,24 @@ class MyRouter {
   late GoRouter _router;
 
   GoRouter get router => _router;
+}
+
+class CustomSlideTransition extends CustomTransitionPage<void> {
+  CustomSlideTransition({required super.child, super.key})
+      : super(
+          transitionDuration: const Duration(milliseconds: 100),
+          transitionsBuilder: (_, animation, __, child) => FadeTransition(
+            opacity: animation.drive(
+              Tween(
+                // ignore: prefer_int_literals
+                begin: 0.0,
+                // ignore: prefer_int_literals
+                end: 1.0,
+              ).chain(
+                CurveTween(curve: Curves.ease),
+              ),
+            ),
+            child: child,
+          ),
+        );
 }

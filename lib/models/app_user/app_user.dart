@@ -13,7 +13,6 @@ enum UserRole {
 class AppUser with _$AppUser {
   factory AppUser({
     @JsonKey(name: 'id') required String id,
-    @JsonKey(name: 'full_name') required String fullName,
     @JsonKey(name: 'username') required String userName,
     @JsonKey(name: 'email') required String email,
     @Default(UserRole.tenant) @JsonKey(name: 'role') UserRole? role,

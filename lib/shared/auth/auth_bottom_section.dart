@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rent_it/controllers/auth_controllers/auth_fields_validator_controllers.dart';
 import 'package:rent_it/controllers/auth_controllers/auth_view_controllers.dart';
+import 'package:rent_it/resources/strings/auth_strings.dart';
+import 'package:rent_it/shared/auth/auth_role_selector.dart';
+import 'package:rent_it/shared/buttons/google_sign_in_button.dart';
 
 class AuthBottomSection extends ConsumerStatefulWidget {
   const AuthBottomSection({super.key});
@@ -11,46 +15,45 @@ class AuthBottomSection extends ConsumerStatefulWidget {
 
 class _AuthBottomSectionState extends ConsumerState<AuthBottomSection> {
   final spacing = const SizedBox(height: 18);
+
+  Future<void> bottomSwitcherAction(bool signUp) async {
+    if (!signUp) {
+      showAuthSelectorModal(context);
+    } else {
+      ref.read(authToggleProvider.notifier).toggleValue();
+      ref.read(selectedRoleNotifierProvider.notifier).resetState();
+      ref.read(formNotifierProvider.notifier).reset();
+    }
+  }
+
   @override
   Widget build(BuildContext context) => SizedBox(
         width: double.infinity,
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.center, children: [
-          buildContinueText(),
+          _buildContinueText(),
           spacing,
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                  shadowColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.outlineVariant),
-                  backgroundColor: MaterialStateProperty.all(Theme.of(context).colorScheme.onInverseSurface),
-                  fixedSize: MaterialStateProperty.all(const Size(double.infinity, 48)),
-                  shape: MaterialStateProperty.all(const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4)))),
-                ),
-                child: Row(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Image.asset('assets/images/google.png', width: 18, height: 18),
-                  const SizedBox(width: 12),
-                  Text('Google', style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant)),
-                ])),
-          ),
+          const GoogleSignInButton(),
           const SizedBox(height: 18),
-          buildSwitcher()
+          _buildSwitcher()
         ]),
       );
 
-  Widget buildContinueText() => Text('or continue with', style: TextStyle(fontSize: 14, color: Theme.of(context).colorScheme.outlineVariant));
+  Widget _buildContinueText() => Text(AuthStrings.orContinueWith, style: TextStyle(fontSize: 14, color: Theme.of(context).colorScheme.outlineVariant));
 
-  Widget buildSwitcher() {
+  Widget _buildSwitcher() {
     ref.watch(authToggleProvider);
     final signUp = ref.watch(authToggleProvider.notifier).isSignUp;
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(signUp ? 'Already have an account ' : "Don't have an account? ", style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.surfaceTint)),
-        InkWell(onTap: () => ref.read(authToggleProvider.notifier).toggleValue(), child: Text(signUp ? 'Log in' : 'Create now', style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600))),
-      ],
-    );
+    return Row(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.center, children: [
+      Text(signUp ? AuthStrings.signInSwitcher : AuthStrings.signUpSwitcher, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.surfaceTint)),
+      InkWell(
+          onTap: () async => {
+                await bottomSwitcherAction(signUp)
+              },
+          child: Text(
+            signUp ? AuthStrings.login : AuthStrings.createNow,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
+          ))
+    ]);
   }
 }

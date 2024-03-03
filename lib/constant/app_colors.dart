@@ -23,7 +23,7 @@ class AppColors {
   static const Color outline = Color(0xFFF1F5F9);
   static const Color outlineVariant = Color(0xFF64748B);
   static const Color surfaceDim = Color(0x0F000000);
-  static const Color scrim = Color(0x4D000000);
+  static const Color scrim = Color(0xffD9D8D8);
   static const Color inverseSurface = Color(0xFF000000);
   static const Color onInverseSurface = Color(0xFFFFFFFF);
   static const Color inversePrimary = Color(0xFFFFFFFF);
