@@ -1,10 +1,13 @@
 import 'package:bottom_sheet/bottom_sheet.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rent_it/controllers/auth_controllers/auth_fields_validator_controllers.dart';
 import 'package:rent_it/controllers/auth_controllers/auth_view_controllers.dart';
+import 'package:rent_it/controllers/user_controllers/user_controllers.dart';
 import 'package:rent_it/models/app_user/app_user.dart';
 import 'package:rent_it/resources/strings/auth_strings.dart';
+import 'package:rent_it/services/top_level_services/firebase/firestore_database_services.dart';
 import 'package:rent_it/shared/buttons/primary_button.dart';
 import 'package:rent_it/shared/buttons/secondary_button.dart';
 
@@ -28,19 +31,31 @@ class AuthRoleSelector extends ConsumerStatefulWidget {
 }
 
 class _AuthRoleSelectorState extends ConsumerState<AuthRoleSelector> {
-  Future<void> buttonsAction(bool owner) async {
+  final user = FirebaseAuth.instance.currentUser;
+  bool loading = false;
+
+  Future<void> buttonsAction({bool owner = false}) async {
     if (owner) {
       ref.read(selectedRoleNotifierProvider.notifier).setAsOwner();
     } else {
       ref.read(selectedRoleNotifierProvider.notifier).setAsTenant();
     }
 
-    if (!widget.google) {
-      ref.read(authToggleProvider.notifier).toggleValue();
-      ref.read(formNotifierProvider.notifier).reset();
-    }
+    final user = FirebaseAuth.instance.currentUser;
 
-    Navigator.pop(context, ref.read(selectedRoleNotifierProvider.notifier).role);
+    if (user != null) {
+      final value = {
+        'role': owner ? 'owner' : 'tenant'
+      };
+      await updateUserFields(value).then((value) => ref.invalidate(userRoleStreamProvider));
+    } else {
+      if (!widget.google) {
+        ref.read(authToggleProvider.notifier).toggleValue();
+        ref.read(formNotifierProvider.notifier).reset();
+      }
+
+      Navigator.pop(context, ref.read(selectedRoleNotifierProvider.notifier).role);
+    }
   }
 
   @override
@@ -56,21 +71,23 @@ class _AuthRoleSelectorState extends ConsumerState<AuthRoleSelector> {
           ])));
 
   Widget _buildLeading() => SizedBox(
-      width: 192,
+      width: user != null ? double.infinity : 192,
       child: Text(
-        AuthStrings.roleSelectorLeading,
+        user != null ? AuthStrings.roleSelectorSubLeading : AuthStrings.roleSelectorLeading,
         style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.outlineVariant),
       ));
 
   Widget _buildTenantButton() => PrimaryButton(
+      needLoading: user != null,
       onPressed: () async => {
-            buttonsAction(false)
+            buttonsAction()
           },
       text: AuthStrings.tenant);
 
   Widget _buildOwnerButton() => SecondaryButton(
+      needLoading: user != null,
       onPressed: () async => {
-            buttonsAction(true)
+            buttonsAction(owner: true)
           },
       text: AuthStrings.owner);
 }

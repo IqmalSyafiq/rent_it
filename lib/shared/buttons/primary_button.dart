@@ -40,9 +40,10 @@ class _PrimaryButtonState extends ConsumerState<PrimaryButton> {
           shape: MaterialStateProperty.all(const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4)))),
         ),
         child: loading
-            ? const CupertinoActivityIndicator(
-                color: Colors.white,
-              )
-            : Text(widget.text, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onInverseSurface)),
+            ? const CupertinoActivityIndicator(color: Colors.white)
+            : Text(
+                widget.text,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onInverseSurface),
+              ),
       ));
 }

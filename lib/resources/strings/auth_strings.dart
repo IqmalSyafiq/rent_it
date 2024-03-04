@@ -6,6 +6,7 @@ class AuthStrings {
   static const String createTenant = 'Create New Tenant Account';
 
   static const String roleSelectorLeading = 'What type of account do you want to create?';
+  static const String roleSelectorSubLeading = 'Welcome to Rent It!\nPlease select the type of account to continue';
 
   static const String tenant = 'Tenant';
   static const String owner = 'Owner';

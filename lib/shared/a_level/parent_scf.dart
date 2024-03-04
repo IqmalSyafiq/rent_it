@@ -9,7 +9,8 @@ import 'package:rent_it/shared/settings/user_settings.dart';
 class ParentScaffold extends ConsumerStatefulWidget {
   final AppRouteLocations routeLocation;
   final Widget child;
-  const ParentScaffold({required this.routeLocation, required this.child, super.key});
+  final bool hideNavigations;
+  const ParentScaffold({required this.routeLocation, required this.child, this.hideNavigations = false, super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ParentScaffoldState();
@@ -25,14 +26,24 @@ class _ParentScaffoldState extends ConsumerState<ParentScaffold> {
         leadingWidth: 70,
         leading: Row(children: [
           const SizedBox(width: 20),
-          //TODO: handle when there is no photoURL
           SizedBox(
               width: 45,
               height: 45,
               child: CircleAvatar(
-                radius: 20, // Adjust the radius as needed
-                backgroundImage: NetworkImage(FirebaseAuth.instance.currentUser?.photoURL ?? ''),
-              ))
+                  radius: 20,
+                  backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                  backgroundImage: FirebaseAuth.instance.currentUser?.photoURL != null && FirebaseAuth.instance.currentUser?.photoURL != ''
+                      ? NetworkImage(
+                          FirebaseAuth.instance.currentUser?.photoURL ?? '',
+                        )
+                      : null,
+                  child: FirebaseAuth.instance.currentUser?.photoURL == null || FirebaseAuth.instance.currentUser?.photoURL == ''
+                      ? Icon(
+                          Icons.person,
+                          size: 26,
+                          color: Theme.of(context).colorScheme.primary,
+                        )
+                      : null))
         ]),
         actions: [
           IconButton(
@@ -43,7 +54,7 @@ class _ParentScaffoldState extends ConsumerState<ParentScaffold> {
           const SizedBox(width: 20),
         ],
       ),
-      bottomNavigationBar: const AppBottomNavigationBar(),
+      bottomNavigationBar: widget.hideNavigations ? null : const AppBottomNavigationBar(),
       body: SafeArea(child: widget.child),
     );
   }

@@ -50,7 +50,7 @@ class _AppBottomNavigationBarState extends ConsumerState<AppBottomNavigationBar>
       case AppTab.notification:
         return isSelected ? Icons.notifications : Icons.notifications_outlined;
       case AppTab.report:
-        return isSelected ? Icons.post_add : Icons.post_add_outlined;
+        return isSelected ? Icons.article : Icons.article_outlined;
       case AppTab.manage:
         return isSelected ? Icons.maps_home_work : Icons.maps_home_work_outlined;
       default:

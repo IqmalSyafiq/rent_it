@@ -12,3 +12,12 @@ Future<AppUser?> getUser() async {
     return null;
   }
 }
+
+Future<void> updateUserFields(Map<String, dynamic> value) async {
+  final userId = FirebaseAuth.instance.currentUser?.uid;
+  try {
+    await FirestoreService.instance.updateData(path: FirestorePath.user(userId ?? ''), data: value);
+  } catch (error) {
+    print('Error updating user fields: $error');
+  }
+}

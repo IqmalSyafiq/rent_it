@@ -70,7 +70,7 @@ class MyRouter {
         GoRoute(
           name: RouteNames.home,
           path: RoutePaths.home,
-          pageBuilder: (context, state) => CustomSlideTransition(child: const ParentScaffold(routeLocation: AppRouteLocations.home, child: HomeView())),
+          pageBuilder: (context, state) => CustomSlideTransition(child: const HomeView()),
           routes: [
             GoRoute(
               name: RouteNames.notification,
