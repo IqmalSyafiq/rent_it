@@ -6,7 +6,7 @@ class AppColors {
   static const Color onPrimaryContainer = Color(0xFF0D47A1);
   static const Color secondary = Color(0xFF00BFA5);
   static const Color onSecondary = Color(0xFFFFFFFF);
-  static const Color secondaryContainer = Color(0xFFE0F2F1);
+  static const Color secondaryContainer = Color.fromARGB(255, 235, 243, 255);
   static const Color onSecondaryContainer = Color(0xFF00BFA5);
   static const Color tertiary = Color(0xFFC51162);
   static const Color onTertiary = Color(0xFFFFFFFF);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rent_it/shared/report/build_report_widget.dart';
 
 class ReportView extends ConsumerStatefulWidget {
   const ReportView({super.key});
@@ -11,10 +12,17 @@ class ReportView extends ConsumerStatefulWidget {
 class _ReportViewState extends ConsumerState<ReportView> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        color: Colors.amber,
-        child: const Center(
-          child: Text('Report View'),
-        ));
+    int numberOfReports = 15;
+
+    List<Widget> reports = List<Widget>.generate(
+      numberOfReports,
+      (index) => const BuildReportWidget(),
+    );
+
+    return ListView(
+      children: [
+        ...reports,
+      ],
+    );
   }
 }

@@ -47,6 +47,8 @@ dependencies:
   bottom_sheet: ^4.0.0
   google_sign_in: ^6.2.1
   logger: ^2.0.2+1
+  page_view_dot_indicator: ^2.3.0
+  smooth_page_indicator: ^1.1.0
 
 dev_dependencies:
   flutter_test:

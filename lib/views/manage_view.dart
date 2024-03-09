@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rent_it/shared/manage/build_small_house_widget.dart';
 
 class ManageView extends ConsumerStatefulWidget {
   const ManageView({super.key});
@@ -11,10 +12,17 @@ class ManageView extends ConsumerStatefulWidget {
 class _ManageViewState extends ConsumerState<ManageView> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        color: Colors.redAccent,
-        child: const Center(
-          child: Text('Manage View'),
-        ));
+    int numberOfHouses = 15;
+
+    List<Widget> houses = List<Widget>.generate(
+      numberOfHouses,
+      (index) => const BuildSmallHouseWidget(),
+    );
+
+    return ListView(
+      children: [
+        ...houses,
+      ],
+    );
   }
 }
