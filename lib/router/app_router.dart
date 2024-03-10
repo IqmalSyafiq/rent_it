@@ -6,6 +6,8 @@ import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:rent_it/router/routes_info.dart';
 import 'package:rent_it/shared/a_level/parent_scf.dart';
+import 'package:rent_it/shared/manage/build_add_house_button.dart';
+import 'package:rent_it/shared/report/build_add_report_button.dart';
 import 'package:rent_it/views/auth_view.dart';
 import 'package:rent_it/views/home_view.dart';
 import 'package:rent_it/views/manage_view.dart';
@@ -75,17 +77,35 @@ class MyRouter {
             GoRoute(
               name: RouteNames.notification,
               path: RoutePaths.notification,
-              pageBuilder: (context, state) => CustomSlideTransition(child: const ParentScaffold(routeLocation: AppRouteLocations.notification, child: NotificationView())),
+              pageBuilder: (context, state) => CustomSlideTransition(
+                child: const ParentScaffold(
+                  routeLocation: AppRouteLocations.notification,
+                  child: NotificationView(),
+                ),
+              ),
             ),
             GoRoute(
               name: RouteNames.report,
               path: RoutePaths.report,
-              pageBuilder: (context, state) => CustomSlideTransition(child: const ParentScaffold(routeLocation: AppRouteLocations.report, child: ReportView())),
+              pageBuilder: (context, state) => CustomSlideTransition(
+                child: const ParentScaffold(
+                  routeLocation: AppRouteLocations.report,
+                  floatingActionButton: BuildAddReportButton(),
+                  child: ReportView(),
+                ),
+              ),
             ),
             GoRoute(
               name: RouteNames.manage,
               path: RoutePaths.manage,
-              pageBuilder: (context, state) => CustomSlideTransition(child: ParentScaffold(key: state.pageKey, routeLocation: AppRouteLocations.manage, child: const ManageView())),
+              pageBuilder: (context, state) => CustomSlideTransition(
+                child: ParentScaffold(
+                  key: state.pageKey,
+                  routeLocation: AppRouteLocations.manage,
+                  floatingActionButton: const BuildAddHouseButton(),
+                  child: const ManageView(),
+                ),
+              ),
             ),
           ],
         ),

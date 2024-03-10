@@ -9,7 +9,8 @@ class ParentScaffold extends ConsumerStatefulWidget {
   final AppRouteLocations routeLocation;
   final Widget child;
   final bool hideNavigations;
-  const ParentScaffold({required this.routeLocation, required this.child, this.hideNavigations = false, super.key});
+  final Widget? floatingActionButton;
+  const ParentScaffold({required this.routeLocation, required this.child, this.hideNavigations = false, this.floatingActionButton, super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ParentScaffoldState();
@@ -22,6 +23,7 @@ class _ParentScaffoldState extends ConsumerState<ParentScaffold> {
     return Scaffold(
       appBar: buildTopBar(context, ref, widget.routeLocation),
       bottomNavigationBar: widget.hideNavigations ? null : const AppBottomNavigationBar(),
+      floatingActionButton: widget.floatingActionButton,
       body: SafeArea(child: Padding(padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), child: widget.child)),
     );
   }
