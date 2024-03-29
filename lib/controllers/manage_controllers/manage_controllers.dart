@@ -25,23 +25,22 @@ final userHouseStreamProvider = StreamProvider.autoDispose<List<House>>((ref) as
   }
 });
 
-// final houseStreamProvider = StreamProvider.autoDispose<House?>((ref) async* {
-//   final firebaseUser = FirebaseAuth.instance.currentUser;
+final houseStreamProvider = StreamProvider.autoDispose.family<House?, String>((ref, houseId) async* {
+  final firebaseUser = FirebaseAuth.instance.currentUser;
 
-//   if (firebaseUser == null) {
-//     yield null; // end execution here
-//     return;
-//   }
+  if (firebaseUser == null) {
+    yield null; // end execution here
+    return;
+  }
 
-//   final uid = firebaseUser.uid;
-//   final stream = FirebaseFirestore.instance.collection(FirestoreCollections.houses).where('id', arrayContains: uid).snapshots();
+  final stream = FirebaseFirestore.instance.collection(FirestoreCollections.houses).doc(houseId).snapshots();
 
-//   await for (final snapshot in stream) {
-//     if (snapshot.size > 0) {
-//       final houses = snapshot.docs.map((doc) => House.fromFirestore(doc)).toList();
-//       yield houses;
-//     } else {
-//       yield [];
-//     }
-//   }
-// });
+  await for (final snapshot in stream) {
+    if (snapshot.exists) {
+      final house = House.fromFirestore(snapshot);
+      yield house;
+    } else {
+      yield null;
+    }
+  }
+});

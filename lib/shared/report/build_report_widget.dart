@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rent_it/constant/app_text_styles.dart';
+import 'package:rent_it/controllers/manage_controllers/manage_controllers.dart';
 import 'package:rent_it/models/report/report.dart';
 import 'package:rent_it/services/top_level_services/main_services.dart/main_services.dart';
 import 'package:rent_it/shared/report/report_modal.dart';
@@ -44,12 +45,33 @@ class _BuildReportWidgetState extends ConsumerState<BuildReportWidget> {
                 Text(timeAgo(widget.createdAt), style: AppTextStyles.bodySmall.copyWith(color: Theme.of(context).colorScheme.scrim)),
               ],
             ),
+            const SizedBox(height: 6),
             Row(children: [
-              Text(widget.houseId, style: AppTextStyles.bodySmall.copyWith(fontWeight: FontWeight.w500)),
-              const SizedBox(width: 10),
-              Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2), decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary.withOpacity(0.5), borderRadius: BorderRadius.circular(20)), child: Text(widget.reportType == ReportType.house ? 'House' : 'Others', style: AppTextStyles.labelSmall.copyWith(color: Theme.of(context).colorScheme.inversePrimary)))
+              buildHouseName(),
             ]),
             const SizedBox(height: 10),
             Text(widget.reportDescription, style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.w300))
           ])));
+
+  Widget buildHouseName() => ref.watch(houseStreamProvider(widget.houseId)).when(
+        data: (house) {
+          String houseName = 'Address not found';
+
+          if (house != null) {
+            houseName = house.addressLineOne;
+          }
+          return Text(houseName, style: AppTextStyles.bodySmall.copyWith(fontWeight: FontWeight.w500));
+        },
+        loading: Container.new,
+        error: (_, __) => Container(),
+      );
+
+  Widget buildBadge() => Container(
+      margin: const EdgeInsets.only(right: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary.withOpacity(0.5), borderRadius: BorderRadius.circular(20)),
+      child: Text(
+        widget.reportType == ReportType.house ? 'H' : 'O',
+        style: AppTextStyles.labelSmall.copyWith(color: Theme.of(context).colorScheme.inversePrimary),
+      ));
 }
