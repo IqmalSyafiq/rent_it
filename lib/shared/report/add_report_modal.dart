@@ -1,8 +1,15 @@
 import 'package:bottom_sheet/bottom_sheet.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rent_it/constant/app_text_styles.dart';
+import 'package:rent_it/controllers/manage_controllers/manage_controllers.dart';
+import 'package:rent_it/controllers/user_controllers/user_controllers.dart';
+import 'package:rent_it/models/house/house.dart';
+import 'package:rent_it/models/report/report.dart';
 import 'package:rent_it/resources/getters/form_field_getters.dart';
+import 'package:rent_it/services/low_level_services/report_services/report_services.dart';
+import 'package:rent_it/services/top_level_services/main_services.dart/main_services.dart';
 import 'package:rent_it/shared/app_text_input_field.dart';
 import 'package:rent_it/shared/buttons/primary_button.dart';
 import 'package:rent_it/shared/custom_form_dropdown.dart';
@@ -27,6 +34,9 @@ class AddReportModal extends ConsumerStatefulWidget {
 
 class _AddReportModalState extends ConsumerState<AddReportModal> {
   final reportTitleController = TextEditingController();
+  final reportDescriptionController = TextEditingController();
+  House? house;
+  ReportType? reportType;
 
   @override
   Widget build(BuildContext context) => CustomScrollView(slivers: [
@@ -41,24 +51,52 @@ class _AddReportModalState extends ConsumerState<AddReportModal> {
                   Text('Provide the information below to report the issue', style: AppTextStyles.bodyMedium.copyWith(color: Theme.of(context).colorScheme.outlineVariant)),
                   const SizedBox(height: 32),
                   AppFormTextField(controller: reportTitleController, type: FormFieldType.reportTitle),
-                  CustomFormDropdown(
-                      label: 'House',
-                      hint: 'Select House',
-                      items: const [
-                        'House 1',
-                        'House 2'
-                      ],
-                      onItemSelected: (value) {}),
-                  CustomFormDropdown(
-                      label: 'Type of Report',
-                      hint: 'Select Type of Report',
-                      items: const [
-                        'House ',
-                        'Others'
-                      ],
-                      onItemSelected: (value) {}),
-                  AppFormTextField(controller: reportTitleController, type: FormFieldType.reportDescription),
-                  PrimaryButton(onPressed: () {}, text: 'Submit')
+                  _buildHouseDropdown(),
+                  _buildReportTypeDropdown(),
+                  AppFormTextField(controller: reportDescriptionController, type: FormFieldType.reportDescription),
+                  _buildSubmitButton()
                 ])))
       ]);
+
+  Widget _buildHouseDropdown() => ref.watch(userHouseStreamProvider).when(
+        data: (houses) => CustomFormDropdown(
+            label: 'House',
+            hint: 'Select House',
+            items: houses.map((house) => house.addressLineOne).toList(),
+            onItemSelected: (value) {
+              setState(() {
+                house = houses.firstWhere((element) => element.addressLineOne == value);
+              });
+            }),
+        loading: () => const CupertinoActivityIndicator(),
+        error: (error, stack) => Text('Error: $error'),
+      );
+
+  Widget _buildReportTypeDropdown() => CustomFormDropdown(
+        label: 'Report Type',
+        hint: 'Select Report Type',
+        items: ReportType.values.map((e) {
+          String str = e.toString().split('.').last;
+          return '${str[0].toUpperCase()}${str.substring(1)}';
+        }).toList(),
+        onItemSelected: (value) {
+          setState(() {
+            reportType = ReportType.values.firstWhere((element) => element.toString().split('.').last == value.toLowerCase());
+          });
+        },
+      );
+
+  Widget _buildSubmitButton() => ref.watch(userNameStreamProvider).when(
+      data: (userName) => PrimaryButton(
+          needLoading: true,
+          disabled: reportTitleController.text.isEmpty && reportDescriptionController.text.isEmpty && (house == null || reportType == null),
+          onDisabledPressed: () => showErrorSnackbar(context, 'Please fill in all fields'),
+          onPressed: () async {
+            await addReport(reportTitleController.text, reportDescriptionController.text, house!, userName);
+            // ignore: use_build_context_synchronously
+            Navigator.pop(context);
+          },
+          text: 'Submit'),
+      loading: Container.new,
+      error: (_, __) => Container());
 }

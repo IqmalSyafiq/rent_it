@@ -1,6 +1,15 @@
 library firestore_service;
 
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+String getRandString(int len) {
+  final random = Random.secure();
+  final values = List<int>.generate(len, (i) => random.nextInt(255));
+  return base64UrlEncode(values);
+}
 
 class FirestoreService {
   FirestoreService._();

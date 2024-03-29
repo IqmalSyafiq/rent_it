@@ -32,6 +32,7 @@ class _SettingModalItemsState extends ConsumerState<SettingModalItems> {
           _buildLeading(),
           Expanded(child: Container()),
           _buildLogoutSection(),
+          _testButton()
         ],
       ),
     );
@@ -52,6 +53,17 @@ class _SettingModalItemsState extends ConsumerState<SettingModalItems> {
             onPressed: () async => {
               await logout()
             },
+            icon: const Icon(Icons.logout, size: 18, color: Colors.red),
+          )
+        ],
+      );
+
+  Widget _testButton() => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text('Test', style: Theme.of(context).textTheme.bodyMedium),
+          IconButton(
+            onPressed: () async => {},
             icon: const Icon(Icons.logout, size: 18, color: Colors.red),
           )
         ],

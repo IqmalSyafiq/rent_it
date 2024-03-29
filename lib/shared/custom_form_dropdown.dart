@@ -40,17 +40,14 @@ class _CustomFormDropdownState extends ConsumerState<CustomFormDropdown> {
               }
               return null;
             },
-            onChanged: (value) {
-              //Do something when selected item is changed.
-            },
-            onSaved: (value) {
-              selectedValue = value.toString();
-            },
+            onChanged: (value) => widget.onItemSelected(value!),
+            onSaved: (value) =>
+              selectedValue = value.toString(),
             buttonStyleData: const ButtonStyleData(padding: EdgeInsets.only(right: 8)),
             iconStyleData: const IconStyleData(icon: Icon(Icons.arrow_drop_down, color: Colors.black45), iconSize: 24),
             dropdownStyleData: DropdownStyleData(decoration: BoxDecoration(borderRadius: BorderRadius.circular(8))),
             menuItemStyleData: const MenuItemStyleData(padding: EdgeInsets.symmetric(horizontal: 16)))
-      ]),
+      ])
     );
   }
 }

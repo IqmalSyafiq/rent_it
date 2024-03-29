@@ -6,7 +6,16 @@ class PrimaryButton extends ConsumerStatefulWidget {
   final VoidCallback onPressed;
   final String text;
   final bool needLoading;
-  const PrimaryButton({required this.onPressed, required this.text, this.needLoading = false, super.key});
+  final bool disabled;
+  final VoidCallback? onDisabledPressed;
+  const PrimaryButton({
+    required this.onPressed,
+    required this.text,
+    this.needLoading = false,
+    this.disabled = false,
+    this.onDisabledPressed,
+    super.key,
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _PrimaryButtonState();
@@ -25,15 +34,19 @@ class _PrimaryButtonState extends ConsumerState<PrimaryButton> {
   Widget build(BuildContext context) => SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: () async {
-          if (widget.needLoading) {
-            toggleLoading();
-            await Future.delayed(const Duration(seconds: 2));
-            widget.onPressed();
-            toggleLoading();
-          }
-          widget.onPressed();
-        },
+        onPressed: widget.disabled
+            ? widget.onDisabledPressed
+            : () async {
+                if (widget.needLoading) {
+                  toggleLoading();
+                  await Future.delayed(const Duration(seconds: 2)).then((value) async {
+                    widget.onPressed();
+                  });
+                  toggleLoading();
+                } else {
+                  widget.onPressed();
+                }
+              },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(Theme.of(context).colorScheme.primary),
           fixedSize: MaterialStateProperty.all(const Size(double.infinity, 48)),
