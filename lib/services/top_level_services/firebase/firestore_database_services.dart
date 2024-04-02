@@ -25,23 +25,7 @@ Future<void> updateUserFields(Map<String, dynamic> value) async {
   }
 }
 
-Future<void> setHouse() async {
-  final house = House(
-    id: getRandString(21),
-    ownerId: getRandString(21),
-    addressLineOne: 'B-32-52',
-    addressLineTwo: 'Jalan 1/149E',
-    postCode: '58000',
-    city: 'Kuala Lumpur',
-    state: 'Kuala Lumpur',
-    numRooms: 3,
-    bathrooms: 2,
-    monthlyRent: 200,
-    tenantsId: [
-      FirebaseAuth.instance.currentUser?.uid ?? ''
-    ],
-  );
-
+Future<void> setHouse(House house) async {
   try {
     await FirestoreService.instance.setData(path: FirestorePath.house(house.id), data: house.toJson(), merge: true);
   } catch (error) {

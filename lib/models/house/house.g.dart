@@ -11,12 +11,12 @@ _$HouseImpl _$$HouseImplFromJson(Map<String, dynamic> json) => _$HouseImpl(
       ownerId: json['owner_id'] as String,
       addressLineOne: json['address_line_one'] as String,
       addressLineTwo: json['address_line_two'] as String?,
-      postCode: json['postcode'] as String,
+      postCode: json['postcode'] as num,
       city: json['city'] as String,
       state: json['state'] as String,
-      numRooms: json['num_rooms'] as int,
-      bathrooms: json['num_bathrooms'] as int,
-      monthlyRent: (json['monthly_rent'] as num).toDouble(),
+      numRooms: json['num_rooms'] as num,
+      bathrooms: json['num_bathrooms'] as num,
+      monthlyRent: json['monthly_rent'] as num,
       description: json['description'] as String?,
       imageUrl: (json['image_url'] as List<dynamic>?)
           ?.map((e) => e as String)

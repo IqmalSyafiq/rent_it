@@ -22,7 +22,7 @@ class _BuildSmallHouseWidgetState extends ConsumerState<BuildSmallHouseWidget> {
   @override
   Widget build(BuildContext context) => GestureDetector(
         onTap: () async => {
-          showHouseModal(context)
+          showHouseModal(context, widget.houseId)
         },
         child: Container(
           margin: const EdgeInsets.only(bottom: 6),

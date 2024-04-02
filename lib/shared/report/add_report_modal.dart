@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rent_it/constant/app_text_styles.dart';
 import 'package:rent_it/controllers/manage_controllers/manage_controllers.dart';
 import 'package:rent_it/controllers/user_controllers/user_controllers.dart';
+import 'package:rent_it/models/app_user/app_user.dart';
 import 'package:rent_it/models/house/house.dart';
 import 'package:rent_it/models/report/report.dart';
 import 'package:rent_it/resources/getters/form_field_getters.dart';
@@ -58,7 +59,7 @@ class _AddReportModalState extends ConsumerState<AddReportModal> {
                 ])))
       ]);
 
-  Widget _buildHouseDropdown() => ref.watch(userHouseStreamProvider).when(
+  Widget _buildHouseDropdown() => ref.watch(housesStreamProvider(UserRole.tenant)).when(
         data: (houses) => CustomFormDropdown(
             label: 'House',
             hint: 'Select House',

@@ -29,17 +29,17 @@ mixin _$House {
   @JsonKey(name: 'address_line_two')
   String? get addressLineTwo => throw _privateConstructorUsedError;
   @JsonKey(name: 'postcode')
-  String get postCode => throw _privateConstructorUsedError;
+  num get postCode => throw _privateConstructorUsedError;
   @JsonKey(name: 'city')
   String get city => throw _privateConstructorUsedError;
   @JsonKey(name: 'state')
   String get state => throw _privateConstructorUsedError;
   @JsonKey(name: 'num_rooms')
-  int get numRooms => throw _privateConstructorUsedError;
+  num get numRooms => throw _privateConstructorUsedError;
   @JsonKey(name: 'num_bathrooms')
-  int get bathrooms => throw _privateConstructorUsedError;
+  num get bathrooms => throw _privateConstructorUsedError;
   @JsonKey(name: 'monthly_rent')
-  double get monthlyRent => throw _privateConstructorUsedError;
+  num get monthlyRent => throw _privateConstructorUsedError;
   @JsonKey(name: 'description')
   String? get description => throw _privateConstructorUsedError;
   @JsonKey(name: 'image_url')
@@ -62,12 +62,12 @@ abstract class $HouseCopyWith<$Res> {
       @JsonKey(name: 'owner_id') String ownerId,
       @JsonKey(name: 'address_line_one') String addressLineOne,
       @JsonKey(name: 'address_line_two') String? addressLineTwo,
-      @JsonKey(name: 'postcode') String postCode,
+      @JsonKey(name: 'postcode') num postCode,
       @JsonKey(name: 'city') String city,
       @JsonKey(name: 'state') String state,
-      @JsonKey(name: 'num_rooms') int numRooms,
-      @JsonKey(name: 'num_bathrooms') int bathrooms,
-      @JsonKey(name: 'monthly_rent') double monthlyRent,
+      @JsonKey(name: 'num_rooms') num numRooms,
+      @JsonKey(name: 'num_bathrooms') num bathrooms,
+      @JsonKey(name: 'monthly_rent') num monthlyRent,
       @JsonKey(name: 'description') String? description,
       @JsonKey(name: 'image_url') List<String>? imageUrl,
       @JsonKey(name: 'tenants_id') List<String>? tenantsId});
@@ -120,7 +120,7 @@ class _$HouseCopyWithImpl<$Res, $Val extends House>
       postCode: null == postCode
           ? _value.postCode
           : postCode // ignore: cast_nullable_to_non_nullable
-              as String,
+              as num,
       city: null == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
@@ -132,15 +132,15 @@ class _$HouseCopyWithImpl<$Res, $Val extends House>
       numRooms: null == numRooms
           ? _value.numRooms
           : numRooms // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       bathrooms: null == bathrooms
           ? _value.bathrooms
           : bathrooms // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       monthlyRent: null == monthlyRent
           ? _value.monthlyRent
           : monthlyRent // ignore: cast_nullable_to_non_nullable
-              as double,
+              as num,
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -169,12 +169,12 @@ abstract class _$$HouseImplCopyWith<$Res> implements $HouseCopyWith<$Res> {
       @JsonKey(name: 'owner_id') String ownerId,
       @JsonKey(name: 'address_line_one') String addressLineOne,
       @JsonKey(name: 'address_line_two') String? addressLineTwo,
-      @JsonKey(name: 'postcode') String postCode,
+      @JsonKey(name: 'postcode') num postCode,
       @JsonKey(name: 'city') String city,
       @JsonKey(name: 'state') String state,
-      @JsonKey(name: 'num_rooms') int numRooms,
-      @JsonKey(name: 'num_bathrooms') int bathrooms,
-      @JsonKey(name: 'monthly_rent') double monthlyRent,
+      @JsonKey(name: 'num_rooms') num numRooms,
+      @JsonKey(name: 'num_bathrooms') num bathrooms,
+      @JsonKey(name: 'monthly_rent') num monthlyRent,
       @JsonKey(name: 'description') String? description,
       @JsonKey(name: 'image_url') List<String>? imageUrl,
       @JsonKey(name: 'tenants_id') List<String>? tenantsId});
@@ -225,7 +225,7 @@ class __$$HouseImplCopyWithImpl<$Res>
       postCode: null == postCode
           ? _value.postCode
           : postCode // ignore: cast_nullable_to_non_nullable
-              as String,
+              as num,
       city: null == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
@@ -237,15 +237,15 @@ class __$$HouseImplCopyWithImpl<$Res>
       numRooms: null == numRooms
           ? _value.numRooms
           : numRooms // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       bathrooms: null == bathrooms
           ? _value.bathrooms
           : bathrooms // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       monthlyRent: null == monthlyRent
           ? _value.monthlyRent
           : monthlyRent // ignore: cast_nullable_to_non_nullable
-              as double,
+              as num,
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -299,7 +299,7 @@ class _$HouseImpl implements _House {
   final String? addressLineTwo;
   @override
   @JsonKey(name: 'postcode')
-  final String postCode;
+  final num postCode;
   @override
   @JsonKey(name: 'city')
   final String city;
@@ -308,13 +308,13 @@ class _$HouseImpl implements _House {
   final String state;
   @override
   @JsonKey(name: 'num_rooms')
-  final int numRooms;
+  final num numRooms;
   @override
   @JsonKey(name: 'num_bathrooms')
-  final int bathrooms;
+  final num bathrooms;
   @override
   @JsonKey(name: 'monthly_rent')
-  final double monthlyRent;
+  final num monthlyRent;
   @override
   @JsonKey(name: 'description')
   final String? description;
@@ -411,12 +411,12 @@ abstract class _House implements House {
       @JsonKey(name: 'owner_id') required final String ownerId,
       @JsonKey(name: 'address_line_one') required final String addressLineOne,
       @JsonKey(name: 'address_line_two') final String? addressLineTwo,
-      @JsonKey(name: 'postcode') required final String postCode,
+      @JsonKey(name: 'postcode') required final num postCode,
       @JsonKey(name: 'city') required final String city,
       @JsonKey(name: 'state') required final String state,
-      @JsonKey(name: 'num_rooms') required final int numRooms,
-      @JsonKey(name: 'num_bathrooms') required final int bathrooms,
-      @JsonKey(name: 'monthly_rent') required final double monthlyRent,
+      @JsonKey(name: 'num_rooms') required final num numRooms,
+      @JsonKey(name: 'num_bathrooms') required final num bathrooms,
+      @JsonKey(name: 'monthly_rent') required final num monthlyRent,
       @JsonKey(name: 'description') final String? description,
       @JsonKey(name: 'image_url') final List<String>? imageUrl,
       @JsonKey(name: 'tenants_id')
@@ -438,7 +438,7 @@ abstract class _House implements House {
   String? get addressLineTwo;
   @override
   @JsonKey(name: 'postcode')
-  String get postCode;
+  num get postCode;
   @override
   @JsonKey(name: 'city')
   String get city;
@@ -447,13 +447,13 @@ abstract class _House implements House {
   String get state;
   @override
   @JsonKey(name: 'num_rooms')
-  int get numRooms;
+  num get numRooms;
   @override
   @JsonKey(name: 'num_bathrooms')
-  int get bathrooms;
+  num get bathrooms;
   @override
   @JsonKey(name: 'monthly_rent')
-  double get monthlyRent;
+  num get monthlyRent;
   @override
   @JsonKey(name: 'description')
   String? get description;

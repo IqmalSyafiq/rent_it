@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rent_it/controllers/auth_controllers/auth_fields_validator_controllers.dart';
 import 'package:rent_it/resources/getters/form_field_getters.dart';
@@ -19,6 +20,9 @@ class _AppFormTextFieldState extends ConsumerState<AppFormTextField> {
   @override
   Widget build(BuildContext context) {
     ref.watch(formNotifierProvider);
+
+    bool isNumber = widget.type == FormFieldType.postCode || widget.type == FormFieldType.numRooms || widget.type == FormFieldType.bathrooms || widget.type == FormFieldType.monthlyRent;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 24),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -27,6 +31,12 @@ class _AppFormTextFieldState extends ConsumerState<AppFormTextField> {
         TextField(
           controller: widget.controller,
           maxLines: widget.type == FormFieldType.reportDescription ? 5 : 1,
+          keyboardType: isNumber ? TextInputType.number : null,
+          inputFormatters: isNumber
+              ? <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly // Add this line
+                ]
+              : null,
           decoration: InputDecoration(
             errorText: ref.watch(formNotifierProvider).errors[widget.type],
             hintText: formFieldHintsMap[widget.type] ?? '',
