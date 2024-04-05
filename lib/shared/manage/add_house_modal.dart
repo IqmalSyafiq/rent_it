@@ -77,6 +77,7 @@ class _AddHouseModalState extends ConsumerState<AddHouseModal> {
 
         await addHouse(controllers);
         // await addReport(reportTitleController.text, reportDescriptionController.text, house!, userName);
+        // ignore: use_build_context_synchronously
         Navigator.pop(context);
       },
       text: 'Submit',
