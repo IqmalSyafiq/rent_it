@@ -34,10 +34,7 @@ class _HouseModalState extends ConsumerState<HouseModal> {
         SliverAppBar(title: buildAppbarText(), pinned: true, automaticallyImplyLeading: false, actions: [
           IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.close))
         ]),
-        SliverFillRemaining(
-          hasScrollBody: false,
-          child: buildContent(),
-        )
+        SliverFillRemaining(hasScrollBody: false, child: buildContent())
       ]);
 
   Widget buildAppbarText() => ref.watch(houseStreamProvider(widget.houseId)).when(
@@ -48,22 +45,17 @@ class _HouseModalState extends ConsumerState<HouseModal> {
 
   Widget buildContent() => ref.watch(houseStreamProvider(widget.houseId)).when(
         data: (house) => Padding(
-          padding: const EdgeInsets.only(top: 16, left: 24, right: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            padding: const EdgeInsets.only(top: 16, left: 24, right: 24),
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               buildAddressDetails(house),
-              const SizedBox(height: 32),
               buildHouseDetails(house),
-            ],
-          ),
-        ),
+              buildTenants(house)
+            ])),
         loading: Container.new,
         error: (_, __) => Text(_.toString()),
       );
 
-  Widget buildAddressDetails(House? house) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+  Widget buildAddressDetails(House? house) => buildSection(
         children: [
           const BuildInfoHeading(text: 'Address Details'),
           BuildInfoContainer(title: 'Address', value: '${house?.addressLineOne ?? ''}, ${house?.addressLineTwo ?? ''}'),
@@ -73,13 +65,28 @@ class _HouseModalState extends ConsumerState<HouseModal> {
         ],
       );
 
-  Widget buildHouseDetails(House? house) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+  Widget buildHouseDetails(House? house) => buildSection(
         children: [
           const BuildInfoHeading(text: 'House Details'),
           BuildInfoContainer(title: 'Number of Bedroom', value: house?.numRooms.toString() ?? ''),
           BuildInfoContainer(title: 'Number of Bathroom', value: house?.bathrooms.toString() ?? ''),
           BuildInfoContainer(title: 'Description', value: house?.description ?? ''),
         ],
+      );
+
+//! need to show this only to the owner
+//* show the list of tenancy with tenant/user id attached to it
+  Widget buildTenants(House? house) => buildSection(
+        children: [
+          const BuildInfoHeading(text: 'Tenants')
+        ],
+      );
+
+  Widget buildSection({List<Widget>? children}) => Container(
+        margin: const EdgeInsets.only(bottom: 32),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: children ?? [],
+        ),
       );
 }

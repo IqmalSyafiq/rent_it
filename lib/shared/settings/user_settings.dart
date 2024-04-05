@@ -25,17 +25,12 @@ class _SettingModalItemsState extends ConsumerState<SettingModalItems> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 30, horizontal: 40),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        margin: const EdgeInsets.symmetric(vertical: 30, horizontal: 40),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           _buildLeading(),
           Expanded(child: Container()),
           _buildLogoutSection(),
-          _testButton()
-        ],
-      ),
-    );
+        ]));
   }
 
   Widget _buildLeading() => SizedBox(
@@ -58,6 +53,7 @@ class _SettingModalItemsState extends ConsumerState<SettingModalItems> {
         ],
       );
 
+  // ignore: unused_element
   Widget _testButton() => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
