@@ -53,7 +53,7 @@ class _HouseModalState extends ConsumerState<HouseModal> {
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   buildAddressDetails(house),
                   buildHouseDetails(house),
-                  if (userRole == UserRole.owner) buildTenants(house)
+                  buildTenantSection()
                 ])),
             loading: Container.new,
             error: (_, __) => Text(_.toString()),
@@ -109,6 +109,20 @@ class _HouseModalState extends ConsumerState<HouseModal> {
         },
         child: Text('Add Tenant', style: AppTextStyles.bodySmall),
       );
+
+  Widget buildTenantSection() => ref.watch(userRoleStreamProvider).when(
+      data: (userRole) {
+        if (userRole == UserRole.owner) {
+          return ref.watch(houseStreamProvider(widget.houseId)).when(
+                data: (house) => buildTenants(house),
+                loading: Container.new,
+                error: (_, __) => Text(_.toString()),
+              );
+        }
+        return Container();
+      },
+      loading: Container.new,
+      error: (_, __) => Text(_.toString()));
 
   Widget buildSection({List<Widget>? children}) => Container(
         margin: const EdgeInsets.only(bottom: 32),
