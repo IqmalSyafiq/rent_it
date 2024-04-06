@@ -80,9 +80,7 @@ class _BuildAuthedContentState extends ConsumerState<BuildAuthedContent> {
   Widget buildManageButton(String houseId) => InkWell(
         onTap: () => showHouseModal(context, houseId),
         child: Row(mainAxisSize: MainAxisSize.min, children: [
-          Text('Manage', style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.primary)),
-          const SizedBox(width: 10),
-          Icon(Icons.edit_note_outlined, color: Theme.of(context).colorScheme.primary, size: 20)
+          Text('View', style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.primary)),
         ]),
       );
 
