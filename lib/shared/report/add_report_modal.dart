@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,7 @@ import 'package:rent_it/models/report/report.dart';
 import 'package:rent_it/resources/getters/form_field_getters.dart';
 import 'package:rent_it/services/low_level_services/report_services/report_services.dart';
 import 'package:rent_it/services/top_level_services/main_services.dart/main_services.dart';
+import 'package:rent_it/shared/app_snackbar.dart';
 import 'package:rent_it/shared/app_text_input_field.dart';
 import 'package:rent_it/shared/buttons/primary_button.dart';
 import 'package:rent_it/shared/custom_form_dropdown.dart';
@@ -94,7 +97,10 @@ class _AddReportModalState extends ConsumerState<AddReportModal> {
           onDisabledPressed: () => showErrorSnackbar(context, 'Please fill in all fields'),
           onPressed: () async {
             await addReport(reportTitleController.text, reportDescriptionController.text, house!, userName);
-            // ignore: use_build_context_synchronously
+
+            final snackbar = appSnackBar(context, message: 'Report Submitted');
+            ScaffoldMessenger.of(context).showSnackBar(snackbar);
+
             Navigator.pop(context);
           },
           text: 'Submit'),

@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rent_it/models/app_user/app_user.dart';
 import 'package:rent_it/models/report/report.dart';
 import 'package:rent_it/resources/strings/top_level_strings/firebase/firestore_paths.dart';
 
-final userReportsStreamProvider = StreamProvider.autoDispose<List<Report>>((ref) async* {
+final userReportsStreamProvider = StreamProvider.autoDispose.family<List<Report>, UserRole>((ref, role) async* {
   final firebaseUser = FirebaseAuth.instance.currentUser;
 
   if (firebaseUser == null) {
@@ -13,7 +14,11 @@ final userReportsStreamProvider = StreamProvider.autoDispose<List<Report>>((ref)
   }
 
   final uid = firebaseUser.uid;
-  final stream = FirebaseFirestore.instance.collection(FirestoreCollections.reports).where('reporter_id', isEqualTo: uid).snapshots();
+  var stream = FirebaseFirestore.instance.collection(FirestoreCollections.reports).where('reporter_id', isEqualTo: uid).snapshots();
+
+  if (role == UserRole.owner) {
+    stream = FirebaseFirestore.instance.collection(FirestoreCollections.reports).where('receiver_id', isEqualTo: uid).snapshots();
+  }
 
   await for (final snapshot in stream) {
     if (snapshot.size > 0) {
