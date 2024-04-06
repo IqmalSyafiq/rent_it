@@ -1,14 +1,15 @@
 import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rent_it/constant/app_text_styles.dart';
 import 'package:rent_it/services/top_level_services/main_services.dart/main_services.dart';
 
 Future<void> showSettingModal(BuildContext context) async {
   await showFlexibleBottomSheet(
     context: context,
     minHeight: 0,
-    initHeight: 0.3,
-    maxHeight: 0.3,
+    initHeight: 0.2,
+    maxHeight: 0.2,
     bottomSheetBorderRadius: const BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
     builder: (context, controller, _) => const SettingModalItems(),
   );
@@ -24,21 +25,19 @@ class SettingModalItems extends ConsumerStatefulWidget {
 class _SettingModalItemsState extends ConsumerState<SettingModalItems> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        margin: const EdgeInsets.symmetric(vertical: 30, horizontal: 40),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          _buildLeading(),
-          Expanded(child: Container()),
-          _buildLogoutSection(),
-        ]));
+    return CustomScrollView(slivers: [
+      SliverAppBar(title: Text('Setting', style: AppTextStyles.bodyLarge), pinned: true, automaticallyImplyLeading: false, actions: [
+        IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.close))
+      ]),
+      SliverFillRemaining(
+        hasScrollBody: false,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 16, left: 24, right: 24),
+          child: _buildLogoutSection(),
+        ),
+      )
+    ]);
   }
-
-  Widget _buildLeading() => SizedBox(
-      width: 192,
-      child: Text(
-        'Settings',
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Theme.of(context).colorScheme.outlineVariant),
-      ));
 
   Widget _buildLogoutSection() => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
