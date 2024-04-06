@@ -32,7 +32,7 @@ class _BuildReportWidgetState extends ConsumerState<BuildReportWidget> {
   @override
   Widget build(BuildContext context) => GestureDetector(
       onTap: () async => {
-            showReportModal(context)
+            showReportModal(context, widget.reportId)
           },
       child: Container(
           padding: const EdgeInsets.symmetric(vertical: 16),

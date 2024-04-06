@@ -24,6 +24,19 @@ final userStreamProvider = StreamProvider.autoDispose<AppUser>((ref) async* {
   }
 });
 
+final userByIdStreamProvider = StreamProvider.autoDispose.family<AppUser, String>((ref, uid) async* {
+  final stream = FirebaseFirestore.instance.collection(FirestoreCollections.users).doc(uid).snapshots();
+
+  await for (final snapshot in stream) {
+    if (snapshot.exists) {
+      final userData = snapshot.data();
+      if (userData != null) {
+        yield AppUser.fromFirestore(snapshot);
+      }
+    }
+  }
+});
+
 final userRoleStreamProvider = StreamProvider.autoDispose<UserRole?>((ref) async* {
   final user = FirebaseAuth.instance.currentUser;
 

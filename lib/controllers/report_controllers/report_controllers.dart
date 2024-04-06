@@ -30,23 +30,22 @@ final userReportsStreamProvider = StreamProvider.autoDispose.family<List<Report>
   }
 });
 
-final ownerReportsStreamProvider = StreamProvider.autoDispose<List<Report>>((ref) async* {
+final reportStreamProvider = StreamProvider.autoDispose.family<Report?, String>((ref, reportId) async* {
   final firebaseUser = FirebaseAuth.instance.currentUser;
 
   if (firebaseUser == null) {
-    yield []; // end execution here
+    yield null; // end execution here
     return;
   }
 
-  final uid = firebaseUser.uid;
-  final stream = FirebaseFirestore.instance.collection(FirestoreCollections.reports).where('receiver_id', isEqualTo: uid).snapshots();
+  final stream = FirebaseFirestore.instance.collection(FirestoreCollections.reports).doc(reportId).snapshots();
 
   await for (final snapshot in stream) {
-    if (snapshot.size > 0) {
-      final reports = snapshot.docs.map((doc) => Report.fromFirestore(doc)).toList();
-      yield reports;
+    if (snapshot.exists) {
+      final report = Report.fromFirestore(snapshot);
+      yield report;
     } else {
-      yield [];
+      yield null;
     }
   }
 });
