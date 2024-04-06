@@ -16,23 +16,32 @@ class BuildNotificationSection extends ConsumerStatefulWidget {
 class _BuildNotificationSectionState extends ConsumerState<BuildNotificationSection> {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text('Notifications', style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500, color: Theme.of(context).colorScheme.surfaceTint)),
-      const SizedBox(height: 20),
-      _buildNotifications()
-    ]));
+    return ref.watch(userNotificationsListStreamProvider(RealtimeDatabaseRefs().notifications(FirebaseAuth.instance.currentUser?.uid ?? ''))).when(
+        data: (notification) => Expanded(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Notifications', style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500, color: Theme.of(context).colorScheme.surfaceTint)),
+                const SizedBox(height: 20),
+                notification.isNotEmpty ? onNotificationExist() : onNotificationDontExist(),
+              ],
+            )),
+        loading: CupertinoActivityIndicator.new,
+        error: (_, __) => Container());
   }
 
-  Widget _buildNotifications() => Expanded(
+  Widget onNotificationExist() => Expanded(
         child: ref.watch(userNotificationsListStreamProvider(RealtimeDatabaseRefs().notifications(FirebaseAuth.instance.currentUser?.uid ?? ''))).when(
               data: (notifications) {
                 return ListView(
                   children: notifications
                       .map((notification) => BuildNotification(
+                            notificationId: notification.id,
                             title: notification.title,
                             createdAt: notification.createdAt,
                             body: notification.body ?? '',
+                            type: notification.type,
+                            houseId: notification.houseId,
                           ))
                       .toList(),
                 );
@@ -41,4 +50,6 @@ class _BuildNotificationSectionState extends ConsumerState<BuildNotificationSect
               error: (_, __) => Container(),
             ),
       );
+
+  Widget onNotificationDontExist() => const Text('No notification', style: TextStyle(color: Colors.grey));
 }

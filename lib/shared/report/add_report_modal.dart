@@ -15,7 +15,7 @@ import 'package:rent_it/shared/app_text_input_field.dart';
 import 'package:rent_it/shared/buttons/primary_button.dart';
 import 'package:rent_it/shared/custom_form_dropdown.dart';
 
-Future<void> showAddReportModal(BuildContext context, {bool google = false}) async {
+Future<void> showAddReportModal(BuildContext context) async {
   return await showFlexibleBottomSheet(
     context: context,
     minHeight: 0,

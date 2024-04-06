@@ -24,17 +24,9 @@ class ReportModal extends ConsumerStatefulWidget {
 class _ReportModalState extends ConsumerState<ReportModal> {
   @override
   Widget build(BuildContext context) => CustomScrollView(slivers: [
-        SliverAppBar(
-          title: Text('Report', style: AppTextStyles.bodyLarge),
-          pinned: true,
-          automaticallyImplyLeading: false,
-          actions: [
-            IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.close),
-            ),
-          ],
-        ),
+        SliverAppBar(title: Text('Report', style: AppTextStyles.bodyLarge), pinned: true, automaticallyImplyLeading: false, actions: [
+          IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.close))
+        ]),
         const SliverFillRemaining()
       ]);
 }

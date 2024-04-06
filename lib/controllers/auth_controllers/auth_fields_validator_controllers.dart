@@ -42,6 +42,12 @@ class FormNotifier extends StateNotifier<FormState> {
             : password != value
                 ? 'Passwords do not match'
                 : null;
+      case FieldTypes.tenantEmail:
+        errorMessage = value.isEmpty
+            ? 'Email cannot be empty'
+            : !value.contains('@')
+                ? 'Invalid email'
+                : null;
         break;
     }
     state = FormState(errors: {

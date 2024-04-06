@@ -20,9 +20,12 @@ class _NotificationViewState extends ConsumerState<NotificationView> {
             return ListView(
               children: notifications
                   .map((notification) => BuildNotification(
+                        notificationId: notification.id,
                         title: notification.title,
                         createdAt: notification.createdAt,
                         body: notification.body ?? '',
+                        type: notification.type,
+                        houseId: notification.houseId,
                       ))
                   .toList(),
             );

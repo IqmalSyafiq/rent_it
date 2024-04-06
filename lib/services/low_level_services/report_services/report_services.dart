@@ -24,6 +24,7 @@ Future<void> addReport(String title, String description, House house, String use
     id: getRandString(22),
     userId: house.ownerId,
     reportId: report.id,
+    type: NotificationType.report,
     title: title,
     body: 'You have a new report from $userName on ${house.addressLineOne} house',
     createdAt: DateTime.now().millisecondsSinceEpoch,
@@ -31,7 +32,7 @@ Future<void> addReport(String title, String description, House house, String use
 
   try {
     await setReport(report);
-    await setNotificatio(outwardNotification);
+    await setNotification(outwardNotification);
   } catch (error) {
     Logger().e(error);
   }

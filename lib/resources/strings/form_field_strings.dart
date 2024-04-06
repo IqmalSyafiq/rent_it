@@ -24,4 +24,7 @@ class FormFieldStrings {
   static const String bathroomsHint = 'Enter the number of bathrooms';
   static const String monthlyRentHint = 'Enter the monthly rent';
   static const String descriptionHint = 'Enter the description';
+
+  static const String tenantEmail = 'Tenant Email';
+  static const String tenantEmailHint = 'Enter the email of the tenant';
 }

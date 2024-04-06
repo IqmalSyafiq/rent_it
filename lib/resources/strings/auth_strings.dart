@@ -30,4 +30,7 @@ class FormStrings {
   static const String emailHint = 'Enter your email';
   static const String passwordHint = 'Enter your password';
   static const String confirmPasswordHint = 'Re-enter your password';
+
+  static const String tenantEmail = 'Tenant Email';
+  static const String tenantEmailHint = 'Enter the email of the tenant you want to invite';
 }

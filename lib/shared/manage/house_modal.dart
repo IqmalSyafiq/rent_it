@@ -5,6 +5,7 @@ import 'package:rent_it/constant/app_text_styles.dart';
 import 'package:rent_it/controllers/manage_controllers/manage_controllers.dart';
 import 'package:rent_it/models/house/house.dart';
 import 'package:rent_it/shared/build_info_widgets.dart';
+import 'package:rent_it/shared/manage/invite_tenant_modal.dart';
 
 Future<void> showHouseModal(BuildContext context, String houseId) async {
   return await showFlexibleBottomSheet(
@@ -76,10 +77,32 @@ class _HouseModalState extends ConsumerState<HouseModal> {
 
 //! need to show this only to the owner
 //* show the list of tenancy with tenant/user id attached to it
-  Widget buildTenants(House? house) => buildSection(
-        children: [
-          const BuildInfoHeading(text: 'Tenants')
-        ],
+  Widget buildTenants(House? house) => ref.watch(tenantsStreamProvider(house?.id ?? '')).when(
+        data: (tenants) => buildSection(
+          children: [
+            const BuildInfoHeading(text: 'Tenants'),
+            ...tenants
+                .map((tenant) => Text(
+                      tenant.tenantId,
+                      style: AppTextStyles.bodySmall.copyWith(fontSize: 13),
+                    ))
+                .toList(),
+            addTenantButton(house?.id ?? '')
+          ],
+        ),
+        loading: Container.new,
+        error: (_, __) => Text(_.toString()),
+      );
+
+  Widget addTenantButton(String houseId) => ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        ),
+        onPressed: () => {
+          showInviteTenantModal(context, houseId)
+        },
+        child: Text('Add Tenant', style: AppTextStyles.bodySmall),
       );
 
   Widget buildSection({List<Widget>? children}) => Container(

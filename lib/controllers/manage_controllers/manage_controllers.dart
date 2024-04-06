@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rent_it/models/app_user/app_user.dart';
 import 'package:rent_it/models/house/house.dart';
+import 'package:rent_it/models/tenancy/tenancy.dart';
 import 'package:rent_it/resources/strings/top_level_strings/firebase/firestore_paths.dart';
 
 final housesStreamProvider = StreamProvider.autoDispose.family<List<House>, UserRole?>((ref, role) async* {
@@ -46,6 +47,26 @@ final houseStreamProvider = StreamProvider.autoDispose.family<House?, String>((r
       yield house;
     } else {
       yield null;
+    }
+  }
+});
+
+final tenantsStreamProvider = StreamProvider.autoDispose.family<List<Tenancy>, String>((ref, houseId) async* {
+  final firebaseUser = FirebaseAuth.instance.currentUser;
+
+  if (firebaseUser == null) {
+    yield []; // end execution here
+    return;
+  }
+
+  var stream = FirebaseFirestore.instance.collection(FirestoreCollections.tenancy).where('house_id', isEqualTo: houseId).snapshots();
+
+  await for (final snapshot in stream) {
+    if (snapshot.size > 0) {
+      final tenants = snapshot.docs.map((doc) => Tenancy.fromFirestore(doc)).toList();
+      yield tenants;
+    } else {
+      yield [];
     }
   }
 });
