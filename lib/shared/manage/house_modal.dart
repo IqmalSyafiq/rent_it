@@ -1,4 +1,5 @@
 import 'package:bottom_sheet/bottom_sheet.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rent_it/constant/app_text_styles.dart';
@@ -6,7 +7,9 @@ import 'package:rent_it/controllers/manage_controllers/manage_controllers.dart';
 import 'package:rent_it/controllers/user_controllers/user_controllers.dart';
 import 'package:rent_it/models/app_user/app_user.dart';
 import 'package:rent_it/models/house/house.dart';
+import 'package:rent_it/services/top_level_services/main_services.dart/main_services.dart';
 import 'package:rent_it/shared/build_info_widgets.dart';
+import 'package:rent_it/shared/manage/add_document_modal.dart';
 import 'package:rent_it/shared/manage/invite_tenant_modal.dart';
 import 'package:rent_it/shared/manage/tenant_modal.dart';
 
@@ -54,7 +57,7 @@ class _HouseModalState extends ConsumerState<HouseModal> {
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   buildAddressDetails(house),
                   buildHouseDetails(house),
-                  buildTenantSection()
+                  buildTenantSection(),
                 ])),
             loading: Container.new,
             error: (_, __) => Text(_.toString()),
@@ -125,10 +128,59 @@ class _HouseModalState extends ConsumerState<HouseModal> {
                 error: (_, __) => Text(_.toString()),
               );
         }
-        return Container();
+        return buildTenantContent();
       },
       loading: Container.new,
       error: (_, __) => Text(_.toString()));
+
+  Widget buildTenantContent() => ref.watch(tenancyStreamProvider('${FirebaseAuth.instance.currentUser?.uid}.${widget.houseId}')).when(
+        data: (tenancy) => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildSection(children: [
+              const BuildInfoHeading(text: 'Tenancy Details'),
+              BuildInfoContainer(title: 'Tenancy Period', value: getDateDifferenceInYearsMonthsDays(tenancy?.startDate ?? 0, tenancy?.endDate ?? 0)),
+              BuildInfoContainer(title: 'Start Date', value: formatMillisecondsSinceEpoch(tenancy?.startDate ?? 0)),
+              BuildInfoContainer(title: 'End Date', value: formatMillisecondsSinceEpoch(tenancy?.endDate ?? 0)),
+              BuildInfoContainer(title: 'Rent Amount', value: 'RM ${tenancy?.rentAmount}'),
+            ]),
+            buildTenancyDocumentsSection(tenancy?.id ?? ''),
+          ],
+        ),
+        loading: Container.new,
+        error: (_, __) => Container(),
+      );
+
+  Widget buildTenancyDocumentsSection(String tenancyId) => ref.watch(tenancyDocumentsStreamProvider(tenancyId)).when(
+        data: (tenancyDocuments) => buildSection(
+          children: [
+            const BuildInfoHeading(text: 'Tenancy Documents'),
+            ...tenancyDocuments
+                .map((document) => BuildInfoContainer(
+                      title: document.documentType,
+                      value: document.documentName,
+                    ))
+                .toList(),
+            addDocumentButton(tenancyId),
+          ],
+        ),
+        loading: Container.new,
+        error: (_, __) => Text(_.toString()),
+      );
+
+  Widget addDocumentButton(String tenancyId) => Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          ),
+          onPressed: () => {
+            showAddDocumentModal(context, tenancyId)
+          },
+          child: Text('Add Document', style: AppTextStyles.bodySmall),
+        ),
+      );
 
   Widget buildSection({List<Widget>? children}) => Container(
         margin: const EdgeInsets.only(bottom: 32),

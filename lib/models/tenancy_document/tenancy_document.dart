@@ -9,6 +9,7 @@ class TenancyDocument with _$TenancyDocument {
   factory TenancyDocument({
     @JsonKey(name: 'id') required String id,
     @JsonKey(name: 'tenancy_id') required String tenancyId,
+    @JsonKey(name: 'document_type') required String documentType,
     @JsonKey(name: 'document_name') required String documentName,
     @JsonKey(name: 'upload_date') required int uploadDate,
     @JsonKey(name: 'document_url') required String documentUrl,

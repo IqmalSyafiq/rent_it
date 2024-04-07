@@ -24,6 +24,8 @@ mixin _$TenancyDocument {
   String get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'tenancy_id')
   String get tenancyId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'document_type')
+  String get documentType => throw _privateConstructorUsedError;
   @JsonKey(name: 'document_name')
   String get documentName => throw _privateConstructorUsedError;
   @JsonKey(name: 'upload_date')
@@ -46,6 +48,7 @@ abstract class $TenancyDocumentCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'id') String id,
       @JsonKey(name: 'tenancy_id') String tenancyId,
+      @JsonKey(name: 'document_type') String documentType,
       @JsonKey(name: 'document_name') String documentName,
       @JsonKey(name: 'upload_date') int uploadDate,
       @JsonKey(name: 'document_url') String documentUrl});
@@ -66,6 +69,7 @@ class _$TenancyDocumentCopyWithImpl<$Res, $Val extends TenancyDocument>
   $Res call({
     Object? id = null,
     Object? tenancyId = null,
+    Object? documentType = null,
     Object? documentName = null,
     Object? uploadDate = null,
     Object? documentUrl = null,
@@ -78,6 +82,10 @@ class _$TenancyDocumentCopyWithImpl<$Res, $Val extends TenancyDocument>
       tenancyId: null == tenancyId
           ? _value.tenancyId
           : tenancyId // ignore: cast_nullable_to_non_nullable
+              as String,
+      documentType: null == documentType
+          ? _value.documentType
+          : documentType // ignore: cast_nullable_to_non_nullable
               as String,
       documentName: null == documentName
           ? _value.documentName
@@ -106,6 +114,7 @@ abstract class _$$TenancyDocumentImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'id') String id,
       @JsonKey(name: 'tenancy_id') String tenancyId,
+      @JsonKey(name: 'document_type') String documentType,
       @JsonKey(name: 'document_name') String documentName,
       @JsonKey(name: 'upload_date') int uploadDate,
       @JsonKey(name: 'document_url') String documentUrl});
@@ -124,6 +133,7 @@ class __$$TenancyDocumentImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? tenancyId = null,
+    Object? documentType = null,
     Object? documentName = null,
     Object? uploadDate = null,
     Object? documentUrl = null,
@@ -136,6 +146,10 @@ class __$$TenancyDocumentImplCopyWithImpl<$Res>
       tenancyId: null == tenancyId
           ? _value.tenancyId
           : tenancyId // ignore: cast_nullable_to_non_nullable
+              as String,
+      documentType: null == documentType
+          ? _value.documentType
+          : documentType // ignore: cast_nullable_to_non_nullable
               as String,
       documentName: null == documentName
           ? _value.documentName
@@ -159,6 +173,7 @@ class _$TenancyDocumentImpl implements _TenancyDocument {
   _$TenancyDocumentImpl(
       {@JsonKey(name: 'id') required this.id,
       @JsonKey(name: 'tenancy_id') required this.tenancyId,
+      @JsonKey(name: 'document_type') required this.documentType,
       @JsonKey(name: 'document_name') required this.documentName,
       @JsonKey(name: 'upload_date') required this.uploadDate,
       @JsonKey(name: 'document_url') required this.documentUrl});
@@ -173,6 +188,9 @@ class _$TenancyDocumentImpl implements _TenancyDocument {
   @JsonKey(name: 'tenancy_id')
   final String tenancyId;
   @override
+  @JsonKey(name: 'document_type')
+  final String documentType;
+  @override
   @JsonKey(name: 'document_name')
   final String documentName;
   @override
@@ -184,7 +202,7 @@ class _$TenancyDocumentImpl implements _TenancyDocument {
 
   @override
   String toString() {
-    return 'TenancyDocument(id: $id, tenancyId: $tenancyId, documentName: $documentName, uploadDate: $uploadDate, documentUrl: $documentUrl)';
+    return 'TenancyDocument(id: $id, tenancyId: $tenancyId, documentType: $documentType, documentName: $documentName, uploadDate: $uploadDate, documentUrl: $documentUrl)';
   }
 
   @override
@@ -195,6 +213,8 @@ class _$TenancyDocumentImpl implements _TenancyDocument {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.tenancyId, tenancyId) ||
                 other.tenancyId == tenancyId) &&
+            (identical(other.documentType, documentType) ||
+                other.documentType == documentType) &&
             (identical(other.documentName, documentName) ||
                 other.documentName == documentName) &&
             (identical(other.uploadDate, uploadDate) ||
@@ -205,8 +225,8 @@ class _$TenancyDocumentImpl implements _TenancyDocument {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, tenancyId, documentName, uploadDate, documentUrl);
+  int get hashCode => Object.hash(runtimeType, id, tenancyId, documentType,
+      documentName, uploadDate, documentUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -227,6 +247,7 @@ abstract class _TenancyDocument implements TenancyDocument {
   factory _TenancyDocument(
           {@JsonKey(name: 'id') required final String id,
           @JsonKey(name: 'tenancy_id') required final String tenancyId,
+          @JsonKey(name: 'document_type') required final String documentType,
           @JsonKey(name: 'document_name') required final String documentName,
           @JsonKey(name: 'upload_date') required final int uploadDate,
           @JsonKey(name: 'document_url') required final String documentUrl}) =
@@ -241,6 +262,9 @@ abstract class _TenancyDocument implements TenancyDocument {
   @override
   @JsonKey(name: 'tenancy_id')
   String get tenancyId;
+  @override
+  @JsonKey(name: 'document_type')
+  String get documentType;
   @override
   @JsonKey(name: 'document_name')
   String get documentName;
