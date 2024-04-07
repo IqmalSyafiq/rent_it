@@ -86,12 +86,7 @@ class _HouseModalState extends ConsumerState<HouseModal> {
         data: (tenants) => buildSection(
           children: [
             const BuildInfoHeading(text: 'Tenants'),
-            ...tenants
-                .map((tenant) => Text(
-                      tenant.tenantId,
-                      style: AppTextStyles.bodySmall.copyWith(fontSize: 13),
-                    ))
-                .toList(),
+            ...tenants.map((tenant) => buildTenantInfo(tenant.tenantId)).toList(),
             addTenantButton(house?.id ?? '')
           ],
         ),
@@ -99,15 +94,24 @@ class _HouseModalState extends ConsumerState<HouseModal> {
         error: (_, __) => Text(_.toString()),
       );
 
-  Widget addTenantButton(String houseId) => ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+  Widget buildTenantInfo(String tenantId) => ref.watch(userByIdStreamProvider(tenantId)).when(
+        data: (user) => BuildInfoContainer(title: user.userName, value: user.email),
+        loading: Container.new,
+        error: (_, __) => Text(_.toString()),
+      );
+
+  Widget addTenantButton(String houseId) => Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          ),
+          onPressed: () => {
+            showInviteTenantModal(context, houseId)
+          },
+          child: Text('Add Tenant', style: AppTextStyles.bodySmall),
         ),
-        onPressed: () => {
-          showInviteTenantModal(context, houseId)
-        },
-        child: Text('Add Tenant', style: AppTextStyles.bodySmall),
       );
 
   Widget buildTenantSection() => ref.watch(userRoleStreamProvider).when(
