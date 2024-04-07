@@ -5,6 +5,8 @@ class FirestorePath {
   static String house(String houseId) => 'houses/$houseId/';
   static String reports() => 'reports/';
   static String report(String reportId) => 'reports/$reportId/';
+  static String tenancy() => 'tenancy/';
+  static String tenancyById(String tenancyId) => 'tenancy/$tenancyId/';
 }
 
 class FirestoreCollections {
