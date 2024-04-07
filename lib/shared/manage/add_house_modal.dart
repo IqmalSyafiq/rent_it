@@ -12,8 +12,8 @@ Future<void> showAddHouseModal(BuildContext context, {bool google = false}) asyn
   return await showFlexibleBottomSheet(
     context: context,
     minHeight: 0,
-    initHeight: 0.7,
-    maxHeight: 0.7,
+    initHeight: 0.85,
+    maxHeight: 0.85,
     bottomSheetBorderRadius: const BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
     builder: (context, controller, _) => const AddHouseModal(),
   );
@@ -84,19 +84,3 @@ class _AddHouseModalState extends ConsumerState<AddHouseModal> {
     );
   }
 }
-
-
-  //   @JsonKey(name: 'id') required String id,
-  //   @JsonKey(name: 'owner_id') required String ownerId,
-  //   @JsonKey(name: 'address_line_one') required String addressLineOne,
-  //   @JsonKey(name: 'address_line_two') String? addressLineTwo,
-  //   @JsonKey(name: 'postcode') required String postCode,
-  //   @JsonKey(name: 'city') required String city,
-  //   @JsonKey(name: 'state') required String state,
-  //   @JsonKey(name: 'num_rooms') required int numRooms,
-  //   @JsonKey(name: 'num_bathrooms') required int bathrooms,
-  //   @JsonKey(name: 'monthly_rent') required double monthlyRent,
-  //   @JsonKey(name: 'description') String? description,
-  //   @JsonKey(name: 'image_url') List<String>? imageUrl,
-  //   @JsonKey(name: 'tenants_id') List<String>? tenantsId,
-  // }) = _House;

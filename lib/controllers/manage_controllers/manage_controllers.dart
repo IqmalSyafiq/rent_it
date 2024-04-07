@@ -70,3 +70,26 @@ final tenantsStreamProvider = StreamProvider.autoDispose.family<List<Tenancy>, S
     }
   }
 });
+
+final tenancyStreamProvider = StreamProvider.autoDispose.family<Tenancy?, String>((ref, param) async* {
+  final firebaseUser = FirebaseAuth.instance.currentUser;
+
+  if (firebaseUser == null) {
+    yield null; // end execution here
+    return;
+  }
+
+  final tenantId = param.split('.')[0];
+  final houseId = param.split('.')[1];
+
+  final stream = FirebaseFirestore.instance.collection(FirestoreCollections.tenancy).where('tenant_id', isEqualTo: tenantId).where('house_id', isEqualTo: houseId).snapshots();
+
+  await for (final snapshot in stream) {
+    if (snapshot.docs.isNotEmpty) {
+      final tenancy = Tenancy.fromFirestore(snapshot.docs.first);
+      yield tenancy;
+    } else {
+      yield null;
+    }
+  }
+});

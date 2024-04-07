@@ -8,13 +8,14 @@ import 'package:rent_it/models/app_user/app_user.dart';
 import 'package:rent_it/models/house/house.dart';
 import 'package:rent_it/shared/build_info_widgets.dart';
 import 'package:rent_it/shared/manage/invite_tenant_modal.dart';
+import 'package:rent_it/shared/manage/tenant_modal.dart';
 
 Future<void> showHouseModal(BuildContext context, String houseId) async {
   return await showFlexibleBottomSheet(
     context: context,
     minHeight: 0,
-    initHeight: 0.7,
-    maxHeight: 0.7,
+    initHeight: 0.85,
+    maxHeight: 0.85,
     bottomSheetBorderRadius: const BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
     builder: (context, controller, _) => HouseModal(houseId: houseId),
   );
@@ -76,6 +77,7 @@ class _HouseModalState extends ConsumerState<HouseModal> {
           const BuildInfoHeading(text: 'House Details'),
           BuildInfoContainer(title: 'Number of Bedroom', value: house?.numRooms.toString() ?? ''),
           BuildInfoContainer(title: 'Number of Bathroom', value: house?.bathrooms.toString() ?? ''),
+          BuildInfoContainer(title: 'Monthly Rent', value: 'RM ${house?.monthlyRent}'),
           BuildInfoContainer(title: 'Description', value: house?.description ?? ''),
         ],
       );
@@ -86,7 +88,7 @@ class _HouseModalState extends ConsumerState<HouseModal> {
         data: (tenants) => buildSection(
           children: [
             const BuildInfoHeading(text: 'Tenants'),
-            ...tenants.map((tenant) => buildTenantInfo(tenant.tenantId)).toList(),
+            ...tenants.map((tenant) => buildTenantInfo(tenant.tenantId, house?.id ?? '')).toList(),
             addTenantButton(house?.id ?? '')
           ],
         ),
@@ -94,8 +96,8 @@ class _HouseModalState extends ConsumerState<HouseModal> {
         error: (_, __) => Text(_.toString()),
       );
 
-  Widget buildTenantInfo(String tenantId) => ref.watch(userByIdStreamProvider(tenantId)).when(
-        data: (user) => BuildInfoContainer(title: user.userName, value: user.email),
+  Widget buildTenantInfo(String tenantId, String houseId) => ref.watch(userByIdStreamProvider(tenantId)).when(
+        data: (user) => InkWell(onTap: () => showTenantModal(context, tenantId, houseId), child: BuildInfoContainer(title: user.userName, value: user.email)),
         loading: Container.new,
         error: (_, __) => Text(_.toString()),
       );
