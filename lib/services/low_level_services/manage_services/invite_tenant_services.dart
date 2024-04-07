@@ -43,13 +43,3 @@ Future<bool> inviteTenant(House house, String tenantEmail, int startDate, int en
     return false;
   }
 }
-
-
-//! create tenancy object
-
-    // @JsonKey(name: 'id') required String id,
-    // @JsonKey(name: 'tenant_id') required String tenantId,
-    // @JsonKey(name: 'house_id') required String houseId,
-    // @JsonKey(name: 'start_date') required int startDate,
-    // @JsonKey(name: 'end_date') required int endDate,
-    // @JsonKey(name: 'rent_amount') required num rentAmount,
