@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:rent_it/models/house/house.dart';
+import 'package:rent_it/models/tenancy_document/tenancy_document.dart';
 import 'package:rent_it/services/top_level_services/firebase/firestore_database_services.dart';
 import 'package:rent_it/services/top_level_services/firebase/firestore_services.dart';
 
@@ -24,5 +25,24 @@ Future<void> addHouse(List<TextEditingController> houseControllers) async {
     await setHouse(house);
   } catch (error) {
     Logger().e(error);
+  }
+}
+
+Future<bool> addTenancyDocument(String tenancyId, String documentType, String documentName, String documentUrl) async {
+  final doc = TenancyDocument(
+    id: getRandString(22),
+    tenancyId: tenancyId,
+    documentType: documentType,
+    documentName: documentName,
+    uploadDate: DateTime.now().millisecondsSinceEpoch,
+    documentUrl: documentUrl,
+  );
+
+  try {
+    await setTenancyDocument(doc);
+    return true;
+  } catch (e) {
+    Logger().e(e);
+    return false;
   }
 }

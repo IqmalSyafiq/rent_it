@@ -38,6 +38,7 @@ class _BuildAuthedContentState extends ConsumerState<BuildAuthedContent> {
             data: (houses) => Expanded(
                   child: Container(
                     margin: const EdgeInsets.symmetric(vertical: 40),
+                    constraints: const BoxConstraints(maxHeight: 300),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: houses.isNotEmpty ? onHousesExist(houses) : onHouseDontExist(),

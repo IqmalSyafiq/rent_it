@@ -26,7 +26,10 @@ class _BuildNotificationSectionState extends ConsumerState<BuildNotificationSect
                 notification.isNotEmpty ? onNotificationExist() : onNotificationDontExist(),
               ],
             )),
-        loading: CupertinoActivityIndicator.new,
+        loading: () => const Expanded(
+                child: Center(
+              child: CupertinoActivityIndicator(),
+            )),
         error: (_, __) => Container());
   }
 

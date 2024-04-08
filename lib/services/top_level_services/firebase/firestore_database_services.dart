@@ -5,6 +5,7 @@ import 'package:rent_it/models/app_user/app_user.dart';
 import 'package:rent_it/models/house/house.dart';
 import 'package:rent_it/models/report/report.dart';
 import 'package:rent_it/models/tenancy/tenancy.dart';
+import 'package:rent_it/models/tenancy_document/tenancy_document.dart';
 import 'package:rent_it/resources/strings/top_level_strings/firebase/firestore_paths.dart';
 import 'package:rent_it/services/top_level_services/firebase/firestore_services.dart';
 
@@ -46,6 +47,14 @@ Future<void> setReport(Report report) async {
 Future<void> setTenancy(Tenancy tenancy) async {
   try {
     await FirestoreService.instance.setData(path: FirestorePath.tenancyById(tenancy.id), data: tenancy.toJson(), merge: true);
+  } catch (error) {
+    Logger().e(error);
+  }
+}
+
+Future<void> setTenancyDocument(TenancyDocument doc) async {
+  try {
+    await FirestoreService.instance.setData(path: FirestorePath.tenancyDocument(doc.id), data: doc.toJson(), merge: true);
   } catch (error) {
     Logger().e(error);
   }

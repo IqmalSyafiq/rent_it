@@ -13,6 +13,8 @@ enum FormFieldType {
   monthlyRent,
   description,
   tenantEmail,
+  documentType,
+  documentName,
 }
 
 final Map<FormFieldType, String> formFieldLabelsMap = {
@@ -28,6 +30,8 @@ final Map<FormFieldType, String> formFieldLabelsMap = {
   FormFieldType.monthlyRent: FormFieldStrings.monthlyRent,
   FormFieldType.description: FormFieldStrings.description,
   FormFieldType.tenantEmail: FormFieldStrings.tenantEmail,
+  FormFieldType.documentType: FormFieldStrings.documentType,
+  FormFieldType.documentName: FormFieldStrings.documentName,
 };
 
 final Map<FormFieldType, String> formFieldHintsMap = {
@@ -43,4 +47,6 @@ final Map<FormFieldType, String> formFieldHintsMap = {
   FormFieldType.monthlyRent: FormFieldStrings.monthlyRentHint,
   FormFieldType.description: FormFieldStrings.descriptionHint,
   FormFieldType.tenantEmail: FormFieldStrings.tenantEmailHint,
+  FormFieldType.documentType: FormFieldStrings.documentTypeHint,
+  FormFieldType.documentName: FormFieldStrings.documentNameHint,
 };

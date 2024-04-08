@@ -27,4 +27,10 @@ class FormFieldStrings {
 
   static const String tenantEmail = 'Tenant Email';
   static const String tenantEmailHint = 'Enter the email of the tenant';
+
+  static const String documentType = 'Document Type';
+  static const String documentTypeHint = 'Enter the type of the document';
+
+  static const String documentName = 'Document Name';
+  static const String documentNameHint = 'Enter the name of the document';
 }
