@@ -34,7 +34,7 @@ class _AddDocumentModalState extends ConsumerState<AddDocumentModal> {
   final documentTypeController = TextEditingController();
   final documentNameController = TextEditingController();
 
-  String selectedFileName = 'Choose File';
+  String selectedFileName = 'Choose File (PDF)';
 
   PlatformFile? selectedFile;
 
@@ -109,6 +109,7 @@ class _AddDocumentModalState extends ConsumerState<AddDocumentModal> {
   Widget buildAddDocumentButton() => Padding(
         padding: const EdgeInsets.only(top: 24),
         child: PrimaryButton(
+          needLoading: true,
           onPressed: () async {
             final result = await uploadFile(File(selectedFile!.path!), selectedFileName);
 
