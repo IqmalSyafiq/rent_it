@@ -103,8 +103,7 @@ final tenancyDocumentsStreamProvider = StreamProvider.autoDispose.family<List<Te
     return;
   }
 
-  final uid = firebaseUser.uid;
-  var stream = FirebaseFirestore.instance.collection(FirestoreCollections.tenancyDocuments).where('tenancy_id', isEqualTo: uid).snapshots();
+  var stream = FirebaseFirestore.instance.collection(FirestoreCollections.tenancyDocuments).where('tenancy_id', isEqualTo: tenancyId).snapshots();
 
   await for (final snapshot in stream) {
     if (snapshot.size > 0) {
