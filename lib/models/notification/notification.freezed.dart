@@ -40,6 +40,8 @@ mixin _$Notification {
   bool? get isRead => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
   int get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'tenancy_id')
+  String? get tenancyId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -63,7 +65,8 @@ abstract class $NotificationCopyWith<$Res> {
       @JsonKey(name: 'house_id') String? houseId,
       @JsonKey(name: 'payload') Map<String, dynamic>? payload,
       @JsonKey(name: 'is_read') bool? isRead,
-      @JsonKey(name: 'created_at') int createdAt});
+      @JsonKey(name: 'created_at') int createdAt,
+      @JsonKey(name: 'tenancy_id') String? tenancyId});
 }
 
 /// @nodoc
@@ -89,6 +92,7 @@ class _$NotificationCopyWithImpl<$Res, $Val extends Notification>
     Object? payload = freezed,
     Object? isRead = freezed,
     Object? createdAt = null,
+    Object? tenancyId = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -131,6 +135,10 @@ class _$NotificationCopyWithImpl<$Res, $Val extends Notification>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as int,
+      tenancyId: freezed == tenancyId
+          ? _value.tenancyId
+          : tenancyId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -153,7 +161,8 @@ abstract class _$$NotificationImplCopyWith<$Res>
       @JsonKey(name: 'house_id') String? houseId,
       @JsonKey(name: 'payload') Map<String, dynamic>? payload,
       @JsonKey(name: 'is_read') bool? isRead,
-      @JsonKey(name: 'created_at') int createdAt});
+      @JsonKey(name: 'created_at') int createdAt,
+      @JsonKey(name: 'tenancy_id') String? tenancyId});
 }
 
 /// @nodoc
@@ -177,6 +186,7 @@ class __$$NotificationImplCopyWithImpl<$Res>
     Object? payload = freezed,
     Object? isRead = freezed,
     Object? createdAt = null,
+    Object? tenancyId = freezed,
   }) {
     return _then(_$NotificationImpl(
       id: null == id
@@ -219,6 +229,10 @@ class __$$NotificationImplCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as int,
+      tenancyId: freezed == tenancyId
+          ? _value.tenancyId
+          : tenancyId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -234,9 +248,10 @@ class _$NotificationImpl implements _Notification {
       @JsonKey(name: 'type') required this.type,
       @JsonKey(name: 'body') this.body,
       @JsonKey(name: 'house_id') this.houseId,
-      @JsonKey(name: 'payload') final Map<String, dynamic>? payload,
+      @JsonKey(name: 'payload') final Map<String, dynamic>? payload = null,
       @JsonKey(name: 'is_read') this.isRead = false,
-      @JsonKey(name: 'created_at') required this.createdAt})
+      @JsonKey(name: 'created_at') required this.createdAt,
+      @JsonKey(name: 'tenancy_id') this.tenancyId})
       : _payload = payload;
 
   factory _$NotificationImpl.fromJson(Map<String, dynamic> json) =>
@@ -280,10 +295,13 @@ class _$NotificationImpl implements _Notification {
   @override
   @JsonKey(name: 'created_at')
   final int createdAt;
+  @override
+  @JsonKey(name: 'tenancy_id')
+  final String? tenancyId;
 
   @override
   String toString() {
-    return 'Notification(id: $id, userId: $userId, reportId: $reportId, title: $title, type: $type, body: $body, houseId: $houseId, payload: $payload, isRead: $isRead, createdAt: $createdAt)';
+    return 'Notification(id: $id, userId: $userId, reportId: $reportId, title: $title, type: $type, body: $body, houseId: $houseId, payload: $payload, isRead: $isRead, createdAt: $createdAt, tenancyId: $tenancyId)';
   }
 
   @override
@@ -302,7 +320,9 @@ class _$NotificationImpl implements _Notification {
             const DeepCollectionEquality().equals(other._payload, _payload) &&
             (identical(other.isRead, isRead) || other.isRead == isRead) &&
             (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+                other.createdAt == createdAt) &&
+            (identical(other.tenancyId, tenancyId) ||
+                other.tenancyId == tenancyId));
   }
 
   @JsonKey(ignore: true)
@@ -318,7 +338,8 @@ class _$NotificationImpl implements _Notification {
       houseId,
       const DeepCollectionEquality().hash(_payload),
       isRead,
-      createdAt);
+      createdAt,
+      tenancyId);
 
   @JsonKey(ignore: true)
   @override
@@ -345,7 +366,8 @@ abstract class _Notification implements Notification {
           @JsonKey(name: 'house_id') final String? houseId,
           @JsonKey(name: 'payload') final Map<String, dynamic>? payload,
           @JsonKey(name: 'is_read') final bool? isRead,
-          @JsonKey(name: 'created_at') required final int createdAt}) =
+          @JsonKey(name: 'created_at') required final int createdAt,
+          @JsonKey(name: 'tenancy_id') final String? tenancyId}) =
       _$NotificationImpl;
 
   factory _Notification.fromJson(Map<String, dynamic> json) =
@@ -381,6 +403,9 @@ abstract class _Notification implements Notification {
   @override
   @JsonKey(name: 'created_at')
   int get createdAt;
+  @override
+  @JsonKey(name: 'tenancy_id')
+  String? get tenancyId;
   @override
   @JsonKey(ignore: true)
   _$$NotificationImplCopyWith<_$NotificationImpl> get copyWith =>

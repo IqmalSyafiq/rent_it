@@ -12,6 +12,7 @@ class BuildNotification extends ConsumerStatefulWidget {
   final String body;
   final NotificationType type;
   final String? houseId;
+  final String? tenancyId;
   const BuildNotification({
     required this.notificationId,
     required this.title,
@@ -19,6 +20,7 @@ class BuildNotification extends ConsumerStatefulWidget {
     required this.body,
     required this.type,
     this.houseId,
+    this.tenancyId,
     super.key,
   });
 
@@ -56,7 +58,12 @@ class _BuildNotificationState extends ConsumerState<BuildNotification> {
             padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 16, vertical: 2)),
           ),
           onPressed: () {
-            showInvitationModal(context, widget.notificationId, widget.houseId ?? '');
+            showInvitationModal(
+              context,
+              widget.notificationId,
+              widget.houseId ?? '',
+              widget.tenancyId ?? '',
+            );
           },
           child: Text(
             'View Invitation',

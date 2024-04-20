@@ -38,7 +38,7 @@ class _BuildAuthedContentState extends ConsumerState<BuildAuthedContent> {
             data: (houses) => Expanded(
                   child: Container(
                     margin: const EdgeInsets.symmetric(vertical: 40),
-                    constraints: const BoxConstraints(maxHeight: 300),
+                    constraints: const BoxConstraints(maxHeight: 330),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: houses.isNotEmpty ? onHousesExist(houses) : onHouseDontExist(),
@@ -61,13 +61,25 @@ class _BuildAuthedContentState extends ConsumerState<BuildAuthedContent> {
                 itemBuilder: (context, index) => buildHouse(
                       house: houses[index],
                     ))),
-        const SizedBox(height: 20),
-        if (houses.length > 1) SmoothPageIndicator(controller: pageViewController, count: houses.length, effect: WormEffect(activeDotColor: Theme.of(context).colorScheme.primary, dotColor: Theme.of(context).colorScheme.surfaceTint)),
+        const SizedBox(height: 14),
+        if (houses.length > 1)
+          Center(
+            child: SmoothPageIndicator(
+              controller: pageViewController,
+              count: houses.length,
+              effect: WormEffect(
+                activeDotColor: Theme.of(context).colorScheme.primary,
+                dotColor: Theme.of(context).colorScheme.surfaceTint,
+                dotHeight: 8,
+                dotWidth: 8,
+              ),
+            ),
+          ),
       ];
 
   Widget buildHouse({required House house}) => Container(
       margin: const EdgeInsets.only(right: 2),
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(color: Theme.of(context).colorScheme.secondaryContainer, borderRadius: BorderRadius.circular(10)),
       child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(house.addressLineOne, style: AppTextStyles.bodyLarge.copyWith(fontWeight: FontWeight.w700)),
@@ -90,7 +102,7 @@ class _BuildAuthedContentState extends ConsumerState<BuildAuthedContent> {
           ? [
               Text('You have not added any houses yet', style: AppTextStyles.bodyLarge.copyWith(fontWeight: FontWeight.w700)),
               const SizedBox(height: 20),
-              ElevatedButton(onPressed: () => showAddHouseModal(context), style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primary, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))), child: Text('Add House', style: AppTextStyles.bodyMedium.copyWith(color: Theme.of(context).colorScheme.onPrimary)))
+              ElevatedButton(onPressed: () => showAddHouseModal(context), style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primary, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))), child: Text('Add House', style: AppTextStyles.bodyMedium.copyWith(color: Colors.white)))
             ]
           : [
               Text('You have not been added to any houses yet', style: AppTextStyles.bodyLarge.copyWith(fontWeight: FontWeight.w700))

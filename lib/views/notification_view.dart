@@ -26,6 +26,7 @@ class _NotificationViewState extends ConsumerState<NotificationView> {
                         body: notification.body ?? '',
                         type: notification.type,
                         houseId: notification.houseId,
+                        tenancyId: notification.tenancyId,
                       ))
                   .toList(),
             );

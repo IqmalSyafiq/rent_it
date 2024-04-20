@@ -14,6 +14,18 @@ Future<bool> inviteTenant(House house, String tenantEmail, int startDate, int en
       return false;
     }
 
+    final tenancyId = getRandString(22);
+
+    final tenancyObject = Tenancy(
+      id: tenancyId,
+      tenantId: tenantId,
+      houseId: house.id,
+      startDate: startDate,
+      endDate: endDate,
+      rentAmount: house.monthlyRent,
+      createdAt: DateTime.now().millisecondsSinceEpoch,
+    );
+
     final inviteTenantNotification = Notification(
       id: getRandString(22),
       userId: tenantId,
@@ -22,16 +34,8 @@ Future<bool> inviteTenant(House house, String tenantEmail, int startDate, int en
       body: 'You have been invited to a house',
       houseId: house.id,
       createdAt: DateTime.now().millisecondsSinceEpoch,
+      tenancyId: tenancyId,
       reportId: '',
-    );
-
-    final tenancyObject = Tenancy(
-      id: getRandString(22),
-      tenantId: tenantId,
-      houseId: house.id,
-      startDate: startDate,
-      endDate: endDate,
-      rentAmount: house.monthlyRent,
     );
 
     await setNotification(inviteTenantNotification);

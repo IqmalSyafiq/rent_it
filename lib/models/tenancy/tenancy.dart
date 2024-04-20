@@ -13,6 +13,8 @@ class Tenancy with _$Tenancy {
     @JsonKey(name: 'start_date') required int startDate,
     @JsonKey(name: 'end_date') required int endDate,
     @JsonKey(name: 'rent_amount') required num rentAmount,
+    @JsonKey(name: 'created_at') required int? createdAt,
+    @Default(false) @JsonKey(name: 'is_active') bool? isActive,
   }) = _Tenancy;
 
   factory Tenancy.fromJson(Map<String, dynamic> json) => _$TenancyFromJson(json);

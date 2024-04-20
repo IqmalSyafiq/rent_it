@@ -5,7 +5,7 @@ import 'package:rent_it/models/house/house.dart';
 import 'package:rent_it/resources/strings/top_level_strings/firebase/realtime_db_refs.dart';
 import 'package:rent_it/services/top_level_services/firebase/firestore_database_services.dart';
 
-Future<void> acceptInvitation(House house) async {
+Future<void> acceptInvitation(House house, String tenancyId) async {
   try {
     final uid = FirebaseAuth.instance.currentUser?.uid;
 
@@ -14,13 +14,18 @@ Future<void> acceptInvitation(House house) async {
       return;
     }
 
-    List<String> existingList = house.tenantsId ?? [];
+    List<String> existingList = List<String>.from(house.tenantsId ?? []);
     existingList.add(uid);
     final value = {
       'tenants_id': existingList,
     };
 
+    final tenancyVal = {
+      'is_active': true,
+    };
+
     await updateHouse(house.id, value);
+    await updateTenancy(tenancyId, tenancyVal);
   } catch (error) {
     Logger().e(error);
   }

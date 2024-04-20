@@ -14,6 +14,8 @@ _$TenancyImpl _$$TenancyImplFromJson(Map<String, dynamic> json) =>
       startDate: json['start_date'] as int,
       endDate: json['end_date'] as int,
       rentAmount: json['rent_amount'] as num,
+      createdAt: json['created_at'] as int?,
+      isActive: json['is_active'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$TenancyImplToJson(_$TenancyImpl instance) =>
@@ -24,4 +26,6 @@ Map<String, dynamic> _$$TenancyImplToJson(_$TenancyImpl instance) =>
       'start_date': instance.startDate,
       'end_date': instance.endDate,
       'rent_amount': instance.rentAmount,
+      'created_at': instance.createdAt,
+      'is_active': instance.isActive,
     };

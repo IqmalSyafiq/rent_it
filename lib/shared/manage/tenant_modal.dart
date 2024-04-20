@@ -6,8 +6,11 @@ import 'package:rent_it/constant/app_text_styles.dart';
 import 'package:rent_it/controllers/manage_controllers/manage_controllers.dart';
 import 'package:rent_it/controllers/user_controllers/user_controllers.dart';
 import 'package:rent_it/models/app_user/app_user.dart';
+import 'package:rent_it/services/low_level_services/manage_services/manage_services.dart';
 import 'package:rent_it/services/top_level_services/main_services.dart/main_services.dart';
+import 'package:rent_it/shared/app_snackbar.dart';
 import 'package:rent_it/shared/build_info_widgets.dart';
+import 'package:rent_it/shared/buttons/secondary_button.dart';
 
 Future<void> showTenantModal(BuildContext context, String tenantId, String houseId) async {
   return await showFlexibleBottomSheet(
@@ -49,11 +52,12 @@ class _TenantModalState extends ConsumerState<TenantModal> {
 
   Widget buildContent() => ref.watch(userByIdStreamProvider(widget.tenantId)).when(
         data: (user) => Padding(
-          padding: const EdgeInsets.only(top: 16, left: 24, right: 24),
+          padding: const EdgeInsets.only(top: 16, left: 24, right: 24, bottom: 16),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             buildUserInfoSection(user),
             buildTenancyInfo(),
             buildTenancyDocumentsSection(),
+            buildRemoveTenantButton(),
           ]),
         ),
         loading: Container.new,
@@ -78,9 +82,34 @@ class _TenantModalState extends ConsumerState<TenantModal> {
         error: (_, __) => Container(),
       );
 
-  Widget buildTenancyDocumentsSection() => buildSection(children: [
-        const BuildInfoHeading(text: 'Tenancy Documents'),
-      ]);
+  Widget buildTenancyDocumentsSection() => ref.watch(tenancyStreamProvider('${widget.tenantId}.${widget.houseId}')).when(
+        data: (tenancy) => ref.watch(tenancyDocumentsStreamProvider(tenancy?.id)).when(
+            data: (tenancyDocuments) => buildSection(
+                  children: [
+                    const BuildInfoHeading(text: 'Tenancy Documents'),
+                    ...tenancyDocuments
+                        .map((document) => BuildInfoContainer(
+                              title: document.documentType,
+                              value: document.documentName,
+                              extraInfo: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  IconButton(
+                                      onPressed: () async => {
+                                            await downloadDocument(context, document.documentUrl, document.documentName)
+                                          },
+                                      icon: const Icon(Icons.downloading_sharp)),
+                                ],
+                              ),
+                            ))
+                        .toList(),
+                  ],
+                ),
+            loading: Container.new,
+            error: (_, __) => Text(_.toString())),
+        loading: Container.new,
+        error: (_, __) => Container(),
+      );
 
   Widget buildHouseName(String houseId) => ref.watch(houseStreamProvider(houseId)).when(
         data: (house) {
@@ -110,5 +139,29 @@ class _TenantModalState extends ConsumerState<TenantModal> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: children ?? [],
         ),
+      );
+
+  Widget buildRemoveTenantButton() => ref.watch(houseStreamProvider(widget.houseId)).when(
+        data: (house) => ref.watch(tenancyStreamProvider('${widget.tenantId}.${widget.houseId}')).when(
+              data: (tenancy) => SecondaryButton(
+                onPressed: () async => {
+                  if (house != null)
+                    {
+                      await removeTenant(house, widget.tenantId, tenancy?.id ?? '').then((_) {
+                        final snackBar = appSnackBar(context, message: 'Tenant Removed');
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        Navigator.pop(context);
+                      })
+                    }
+                },
+                needLoading: true,
+                text: 'Remove Tenant',
+                textColor: Theme.of(context).colorScheme.error,
+              ),
+              loading: Container.new,
+              error: (_, __) => Container(),
+            ),
+        loading: Container.new,
+        error: (_, __) => Container(),
       );
 }

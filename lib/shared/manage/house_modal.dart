@@ -7,6 +7,7 @@ import 'package:rent_it/controllers/manage_controllers/manage_controllers.dart';
 import 'package:rent_it/controllers/user_controllers/user_controllers.dart';
 import 'package:rent_it/models/app_user/app_user.dart';
 import 'package:rent_it/models/house/house.dart';
+import 'package:rent_it/services/low_level_services/manage_services/manage_services.dart';
 import 'package:rent_it/services/top_level_services/main_services.dart/main_services.dart';
 import 'package:rent_it/shared/build_info_widgets.dart';
 import 'package:rent_it/shared/manage/add_document_modal.dart';
@@ -91,7 +92,7 @@ class _HouseModalState extends ConsumerState<HouseModal> {
         data: (tenants) => buildSection(
           children: [
             const BuildInfoHeading(text: 'Tenants'),
-            ...tenants.map((tenant) => buildTenantInfo(tenant.tenantId, house?.id ?? '')).toList(),
+            ...tenants.map((tenant) => buildTenantInfo(tenant.tenantId, house?.id ?? '', tenant.isActive ?? false)).toList(),
             addTenantButton(house?.id ?? '')
           ],
         ),
@@ -99,8 +100,17 @@ class _HouseModalState extends ConsumerState<HouseModal> {
         error: (_, __) => Text(_.toString()),
       );
 
-  Widget buildTenantInfo(String tenantId, String houseId) => ref.watch(userByIdStreamProvider(tenantId)).when(
-        data: (user) => InkWell(onTap: () => showTenantModal(context, tenantId, houseId), child: BuildInfoContainer(title: user.userName, value: user.email)),
+  Widget buildTenantInfo(String tenantId, String houseId, bool isActive) => ref.watch(userByIdStreamProvider(tenantId)).when(
+        data: (user) => InkWell(
+            onTap: () => showTenantModal(context, tenantId, houseId),
+            child: BuildInfoContainer(
+                title: user.userName,
+                value: user.email,
+                extraInfo: Padding(
+                    padding: const EdgeInsets.only(top: 6),
+                    child: Row(children: [
+                      Text(isActive ? 'Active' : 'Inactive', style: AppTextStyles.bodySmall.copyWith(color: isActive ? Colors.green : Colors.red)),
+                    ])))),
         loading: Container.new,
         error: (_, __) => Text(_.toString()),
       );
@@ -159,6 +169,22 @@ class _HouseModalState extends ConsumerState<HouseModal> {
                 .map((document) => BuildInfoContainer(
                       title: document.documentType,
                       value: document.documentName,
+                      extraInfo: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          IconButton(
+                              onPressed: () async => {
+                                    await downloadDocument(context, document.documentUrl, document.documentName)
+                                  },
+                              icon: const Icon(Icons.downloading_sharp)),
+                          IconButton(
+                              onPressed: () => {
+                                    deleteDocument(context, document.id)
+                                  },
+                              icon: const Icon(Icons.delete),
+                              color: Theme.of(context).colorScheme.error),
+                        ],
+                      ),
                     ))
                 .toList(),
             addDocumentButton(tenancyId),

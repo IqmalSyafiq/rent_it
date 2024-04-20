@@ -10,21 +10,26 @@ import 'package:rent_it/shared/app_snackbar.dart';
 import 'package:rent_it/shared/buttons/primary_button.dart';
 import 'package:rent_it/shared/buttons/secondary_button.dart';
 
-Future<void> showInvitationModal(BuildContext context, String notificationId, String houseId) async {
+Future<void> showInvitationModal(BuildContext context, String notificationId, String houseId, String tenancyId) async {
   return await showFlexibleBottomSheet(
     context: context,
     minHeight: 0,
     initHeight: 0.3,
     maxHeight: 0.3,
     bottomSheetBorderRadius: const BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
-    builder: (context, controller, _) => InvitationModal(notificationId: notificationId, houseId: houseId),
+    builder: (context, controller, _) => InvitationModal(
+      notificationId: notificationId,
+      houseId: houseId,
+      tenancyId: tenancyId,
+    ),
   );
 }
 
 class InvitationModal extends ConsumerStatefulWidget {
   final String notificationId;
   final String houseId;
-  const InvitationModal({required this.notificationId, required this.houseId, super.key});
+  final String tenancyId;
+  const InvitationModal({required this.notificationId, required this.houseId, required this.tenancyId, super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _InvitationModalState();
@@ -56,7 +61,7 @@ class _InvitationModalState extends ConsumerState<InvitationModal> {
   Widget buildAcceptButton(House house) => PrimaryButton(
       needLoading: true,
       onPressed: () async => {
-            await acceptInvitation(house).then((value) {
+            await acceptInvitation(house, widget.tenancyId).then((value) {
               deleteInvitation(widget.notificationId);
               final snackbar = appSnackBar(context, message: 'Invitation Accepted');
               ScaffoldMessenger.of(context).showSnackBar(snackbar);

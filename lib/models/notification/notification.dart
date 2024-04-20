@@ -19,9 +19,10 @@ class Notification with _$Notification {
     @JsonKey(name: 'type') required NotificationType type,
     @JsonKey(name: 'body') String? body,
     @JsonKey(name: 'house_id') String? houseId,
-    @JsonKey(name: 'payload') Map<String, dynamic>? payload,
+    @Default(null) @JsonKey(name: 'payload') Map<String, dynamic>? payload,
     @Default(false) @JsonKey(name: 'is_read') bool? isRead,
     @JsonKey(name: 'created_at') required int createdAt,
+    @JsonKey(name: 'tenancy_id') String? tenancyId,
   }) = _Notification;
 
   factory Notification.fromJson(Map<String, dynamic> json) => _$NotificationFromJson(json);

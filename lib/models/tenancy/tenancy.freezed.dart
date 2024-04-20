@@ -32,6 +32,10 @@ mixin _$Tenancy {
   int get endDate => throw _privateConstructorUsedError;
   @JsonKey(name: 'rent_amount')
   num get rentAmount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_at')
+  int? get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_active')
+  bool? get isActive => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,7 +53,9 @@ abstract class $TenancyCopyWith<$Res> {
       @JsonKey(name: 'house_id') String houseId,
       @JsonKey(name: 'start_date') int startDate,
       @JsonKey(name: 'end_date') int endDate,
-      @JsonKey(name: 'rent_amount') num rentAmount});
+      @JsonKey(name: 'rent_amount') num rentAmount,
+      @JsonKey(name: 'created_at') int? createdAt,
+      @JsonKey(name: 'is_active') bool? isActive});
 }
 
 /// @nodoc
@@ -71,6 +77,8 @@ class _$TenancyCopyWithImpl<$Res, $Val extends Tenancy>
     Object? startDate = null,
     Object? endDate = null,
     Object? rentAmount = null,
+    Object? createdAt = freezed,
+    Object? isActive = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -97,6 +105,14 @@ class _$TenancyCopyWithImpl<$Res, $Val extends Tenancy>
           ? _value.rentAmount
           : rentAmount // ignore: cast_nullable_to_non_nullable
               as num,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as int?,
+      isActive: freezed == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 }
@@ -114,7 +130,9 @@ abstract class _$$TenancyImplCopyWith<$Res> implements $TenancyCopyWith<$Res> {
       @JsonKey(name: 'house_id') String houseId,
       @JsonKey(name: 'start_date') int startDate,
       @JsonKey(name: 'end_date') int endDate,
-      @JsonKey(name: 'rent_amount') num rentAmount});
+      @JsonKey(name: 'rent_amount') num rentAmount,
+      @JsonKey(name: 'created_at') int? createdAt,
+      @JsonKey(name: 'is_active') bool? isActive});
 }
 
 /// @nodoc
@@ -134,6 +152,8 @@ class __$$TenancyImplCopyWithImpl<$Res>
     Object? startDate = null,
     Object? endDate = null,
     Object? rentAmount = null,
+    Object? createdAt = freezed,
+    Object? isActive = freezed,
   }) {
     return _then(_$TenancyImpl(
       id: null == id
@@ -160,6 +180,14 @@ class __$$TenancyImplCopyWithImpl<$Res>
           ? _value.rentAmount
           : rentAmount // ignore: cast_nullable_to_non_nullable
               as num,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as int?,
+      isActive: freezed == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -173,7 +201,9 @@ class _$TenancyImpl implements _Tenancy {
       @JsonKey(name: 'house_id') required this.houseId,
       @JsonKey(name: 'start_date') required this.startDate,
       @JsonKey(name: 'end_date') required this.endDate,
-      @JsonKey(name: 'rent_amount') required this.rentAmount});
+      @JsonKey(name: 'rent_amount') required this.rentAmount,
+      @JsonKey(name: 'created_at') required this.createdAt,
+      @JsonKey(name: 'is_active') this.isActive = false});
 
   factory _$TenancyImpl.fromJson(Map<String, dynamic> json) =>
       _$$TenancyImplFromJson(json);
@@ -196,10 +226,16 @@ class _$TenancyImpl implements _Tenancy {
   @override
   @JsonKey(name: 'rent_amount')
   final num rentAmount;
+  @override
+  @JsonKey(name: 'created_at')
+  final int? createdAt;
+  @override
+  @JsonKey(name: 'is_active')
+  final bool? isActive;
 
   @override
   String toString() {
-    return 'Tenancy(id: $id, tenantId: $tenantId, houseId: $houseId, startDate: $startDate, endDate: $endDate, rentAmount: $rentAmount)';
+    return 'Tenancy(id: $id, tenantId: $tenantId, houseId: $houseId, startDate: $startDate, endDate: $endDate, rentAmount: $rentAmount, createdAt: $createdAt, isActive: $isActive)';
   }
 
   @override
@@ -215,13 +251,17 @@ class _$TenancyImpl implements _Tenancy {
                 other.startDate == startDate) &&
             (identical(other.endDate, endDate) || other.endDate == endDate) &&
             (identical(other.rentAmount, rentAmount) ||
-                other.rentAmount == rentAmount));
+                other.rentAmount == rentAmount) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.isActive, isActive) ||
+                other.isActive == isActive));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, tenantId, houseId, startDate, endDate, rentAmount);
+  int get hashCode => Object.hash(runtimeType, id, tenantId, houseId, startDate,
+      endDate, rentAmount, createdAt, isActive);
 
   @JsonKey(ignore: true)
   @override
@@ -239,13 +279,14 @@ class _$TenancyImpl implements _Tenancy {
 
 abstract class _Tenancy implements Tenancy {
   factory _Tenancy(
-          {@JsonKey(name: 'id') required final String id,
-          @JsonKey(name: 'tenant_id') required final String tenantId,
-          @JsonKey(name: 'house_id') required final String houseId,
-          @JsonKey(name: 'start_date') required final int startDate,
-          @JsonKey(name: 'end_date') required final int endDate,
-          @JsonKey(name: 'rent_amount') required final num rentAmount}) =
-      _$TenancyImpl;
+      {@JsonKey(name: 'id') required final String id,
+      @JsonKey(name: 'tenant_id') required final String tenantId,
+      @JsonKey(name: 'house_id') required final String houseId,
+      @JsonKey(name: 'start_date') required final int startDate,
+      @JsonKey(name: 'end_date') required final int endDate,
+      @JsonKey(name: 'rent_amount') required final num rentAmount,
+      @JsonKey(name: 'created_at') required final int? createdAt,
+      @JsonKey(name: 'is_active') final bool? isActive}) = _$TenancyImpl;
 
   factory _Tenancy.fromJson(Map<String, dynamic> json) = _$TenancyImpl.fromJson;
 
@@ -267,6 +308,12 @@ abstract class _Tenancy implements Tenancy {
   @override
   @JsonKey(name: 'rent_amount')
   num get rentAmount;
+  @override
+  @JsonKey(name: 'created_at')
+  int? get createdAt;
+  @override
+  @JsonKey(name: 'is_active')
+  bool? get isActive;
   @override
   @JsonKey(ignore: true)
   _$$TenancyImplCopyWith<_$TenancyImpl> get copyWith =>

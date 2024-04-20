@@ -37,3 +37,16 @@ Future<void> addReport(String title, String description, House house, String use
     Logger().e(error);
   }
 }
+
+Future<void> updateReportStatus(Report? report, ReportStatus status) async {
+  final value = <String, dynamic>{
+    'status': status.toString().split('.').last,
+    'updated_at': DateTime.now().millisecondsSinceEpoch,
+  };
+
+  try {
+    await updateReport(report?.id ?? '', value);
+  } catch (error) {
+    Logger().e(error);
+  }
+}

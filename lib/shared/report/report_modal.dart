@@ -6,6 +6,9 @@ import 'package:rent_it/constant/app_text_styles.dart';
 import 'package:rent_it/controllers/manage_controllers/manage_controllers.dart';
 import 'package:rent_it/controllers/report_controllers/report_controllers.dart';
 import 'package:rent_it/controllers/user_controllers/user_controllers.dart';
+import 'package:rent_it/models/app_user/app_user.dart';
+import 'package:rent_it/models/report/report.dart';
+import 'package:rent_it/services/low_level_services/report_services/report_services.dart';
 import 'package:rent_it/services/top_level_services/main_services.dart/main_services.dart';
 import 'package:rent_it/shared/build_info_widgets.dart';
 
@@ -47,7 +50,7 @@ class _ReportModalState extends ConsumerState<ReportModal> {
             BuildInfoContainer(title: 'Title', value: report?.title ?? ''),
             buildFromUser(report?.reporterId ?? ''),
             BuildInfoContainer(title: 'Issued', value: timeAgo(report?.createdAt ?? 0)),
-            BuildInfoContainer(title: 'Status', value: report?.status.toString().split('.').last ?? ''),
+            buildStatusSection(report),
             BuildInfoContainer(title: 'Type', value: report?.type.toString().split('.').last ?? ''),
             buildHouseName(report?.houseId ?? ''),
             BuildInfoContainer(title: 'Description', value: report?.description ?? ''),
@@ -55,6 +58,37 @@ class _ReportModalState extends ConsumerState<ReportModal> {
         ),
         loading: Container.new,
         error: (_, __) => Text(_.toString()),
+      );
+
+  Widget buildStatusSection(Report? report) => ref.watch(userRoleStreamProvider).when(
+        data: (userRole) => BuildInfoContainer(
+          title: 'Status',
+          value: report?.status.toString().split('.').last ?? '',
+          extraInfo: userRole == UserRole.owner && report?.status == ReportStatus.pending
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 6),
+                  child: Row(children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)), padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16)),
+                      onPressed: () async => {
+                        await updateReportStatus(report, ReportStatus.resolved),
+                      },
+                      child: Text('Resolve', style: AppTextStyles.bodySmall),
+                    ),
+                    const SizedBox(width: 8),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)), padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16)),
+                      onPressed: () async => {
+                        await updateReportStatus(report, ReportStatus.rejected),
+                      },
+                      child: Text('Reject', style: AppTextStyles.bodySmall.copyWith(color: Theme.of(context).colorScheme.error)),
+                    )
+                  ]),
+                )
+              : null,
+        ),
+        loading: Container.new,
+        error: (_, __) => Container(),
       );
 
   Widget buildHouseName(String houseId) => ref.watch(houseStreamProvider(houseId)).when(

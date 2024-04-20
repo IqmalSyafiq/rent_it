@@ -83,6 +83,37 @@ Future<void> updateHouse(String houseId, Map<String, dynamic> value) async {
   }
 }
 
+Future<void> updateTenancy(String tenancyId, Map<String, dynamic> value) async {
+  try {
+    await FirestoreService.instance.updateData(path: FirestorePath.tenancyById(tenancyId), data: value);
+  } catch (error) {
+    Logger().e(error);
+  }
+}
+
+Future<void> deleteTenancy(String tenancyId) async {
+  try {
+    await FirestoreService.instance.deleteData(path: FirestorePath.tenancyById(tenancyId));
+  } catch (error) {
+    Logger().e(error);
+  }
+}
+
+Future<void> deleteTenancyDocument(String id) async {
+  try {
+    await FirestoreService.instance.deleteData(path: FirestorePath.tenancyDocument(id));
+  } catch (error) {
+    Logger().e(error);
+  }
+}
+
+Future<void> updateReport(String reportId, Map<String, dynamic> value) async {
+  try {
+    await FirestoreService.instance.updateData(path: FirestorePath.report(reportId), data: value);
+  } catch (error) {
+    Logger().e(error);
+  }
+}
   // Future<void> updateDocumentFields(String documentId, Map<String, dynamic> value) async {
   //   try {
   //     await _service.updateData(path: FirestorePath.document(documentId), data: value);

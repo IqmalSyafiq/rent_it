@@ -3,6 +3,7 @@ import 'package:rent_it/constant/app_text_styles.dart';
 
 class BuildInfoHeading extends StatelessWidget {
   final String text;
+
   const BuildInfoHeading({required this.text, super.key});
 
   @override
@@ -15,7 +16,8 @@ class BuildInfoHeading extends StatelessWidget {
 class BuildInfoContainer extends StatelessWidget {
   final String title;
   final String value;
-  const BuildInfoContainer({required this.title, required this.value, super.key});
+  final Widget? extraInfo;
+  const BuildInfoContainer({required this.title, required this.value, this.extraInfo, super.key});
 
   @override
   Widget build(BuildContext context) => Container(
@@ -28,6 +30,10 @@ class BuildInfoContainer extends StatelessWidget {
             Text(title, style: AppTextStyles.bodySmall.copyWith(fontWeight: FontWeight.w600)),
             const SizedBox(height: 4),
             Text(value, style: AppTextStyles.bodySmall.copyWith(fontSize: 13)),
+            if (extraInfo != null) ...[
+              const SizedBox(height: 4),
+              extraInfo ?? Container()
+            ]
           ],
         ),
       );

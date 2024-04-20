@@ -21,7 +21,22 @@ class _BuildNotificationSectionState extends ConsumerState<BuildNotificationSect
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Notifications', style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500, color: Theme.of(context).colorScheme.surfaceTint)),
+                Row(children: [
+                  Text(
+                    'Notifications',
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500, color: Theme.of(context).colorScheme.surfaceTint),
+                  ),
+                  if (notification.isNotEmpty) ...[
+                    const SizedBox(width: 6),
+                    Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        decoration: BoxDecoration(color: Theme.of(context).colorScheme.onTertiaryContainer, borderRadius: BorderRadius.circular(20)),
+                        child: Text(
+                          notification.length.toString(),
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.primaryContainer),
+                        ))
+                  ]
+                ]),
                 const SizedBox(height: 20),
                 notification.isNotEmpty ? onNotificationExist() : onNotificationDontExist(),
               ],
@@ -30,7 +45,7 @@ class _BuildNotificationSectionState extends ConsumerState<BuildNotificationSect
                 child: Center(
               child: CupertinoActivityIndicator(),
             )),
-        error: (_, __) => Container());
+        error: (_, __) => Expanded(child: SelectableText(_.toString())));
   }
 
   Widget onNotificationExist() => Expanded(
@@ -45,6 +60,7 @@ class _BuildNotificationSectionState extends ConsumerState<BuildNotificationSect
                             body: notification.body ?? '',
                             type: notification.type,
                             houseId: notification.houseId,
+                            tenancyId: notification.tenancyId,
                           ))
                       .toList(),
                 );

@@ -8,6 +8,7 @@ import 'package:rent_it/constant/app_text_styles.dart';
 import 'package:rent_it/resources/getters/form_field_getters.dart';
 import 'package:rent_it/services/low_level_services/manage_services/manage_services.dart';
 import 'package:rent_it/services/top_level_services/firebase/firebase_storage_services.dart';
+import 'package:rent_it/shared/app_snackbar.dart';
 import 'package:rent_it/shared/app_text_input_field.dart';
 import 'package:rent_it/shared/buttons/primary_button.dart';
 
@@ -113,7 +114,11 @@ class _AddDocumentModalState extends ConsumerState<AddDocumentModal> {
           onPressed: () async {
             final result = await uploadFile(File(selectedFile!.path!), selectedFileName);
 
-            await addTenancyDocument(widget.tenancyId, documentTypeController.text, documentNameController.text, result ?? '');
+            await addTenancyDocument(widget.tenancyId, documentTypeController.text, documentNameController.text, result ?? '').then((_) {
+              final snackBar = appSnackBar(context, message: 'Document Added');
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              Navigator.pop(context);
+            });
           },
           text: 'Add Document',
         ),

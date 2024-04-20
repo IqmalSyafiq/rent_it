@@ -6,7 +6,8 @@ class SecondaryButton extends ConsumerStatefulWidget {
   final VoidCallback onPressed;
   final String text;
   final bool needLoading;
-  const SecondaryButton({required this.onPressed, required this.text, this.needLoading = false, super.key});
+  final Color? textColor;
+  const SecondaryButton({required this.onPressed, required this.text, this.needLoading = false, this.textColor, super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _SecondaryButtonState();
@@ -31,8 +32,9 @@ class _SecondaryButtonState extends ConsumerState<SecondaryButton> {
             await Future.delayed(const Duration(seconds: 2));
             widget.onPressed();
             toggleLoading();
+          } else {
+            widget.onPressed();
           }
-          widget.onPressed();
         },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(Theme.of(context).colorScheme.outline),
@@ -40,6 +42,11 @@ class _SecondaryButtonState extends ConsumerState<SecondaryButton> {
           fixedSize: MaterialStateProperty.all(const Size(double.infinity, 48)),
           shape: MaterialStateProperty.all(const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4)))),
         ),
-        child: loading ? CupertinoActivityIndicator(color: Theme.of(context).colorScheme.outlineVariant) : Text(widget.text, style: Theme.of(context).textTheme.bodyMedium),
+        child: loading
+            ? CupertinoActivityIndicator(color: Theme.of(context).colorScheme.outlineVariant)
+            : Text(
+                widget.text,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: widget.textColor ?? Theme.of(context).colorScheme.onSurface),
+              ),
       ));
 }
