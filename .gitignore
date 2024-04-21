@@ -50,4 +50,4 @@ assets/environments/.env.ios
 assets/environments/.env.macos
 
 # firebase files
-/lib/firebase_options.dart
+
